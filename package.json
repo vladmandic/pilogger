@@ -1,0 +1,25 @@
+{
+  "name": "pilogger",
+  "version": "0.0.1",
+  "description": "Simple Logger for NodeJS",
+  "main": "pilogger.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vladmandic/pilogger.git"
+  },
+  "keywords": [
+    "logger"
+  ],
+  "author": "Vladimir Mandic <mandic00@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vladmandic/pilogger/issues"
+  },
+  "homepage": "https://github.com/vladmandic/pilogger#readme",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "moment": "^2.25.1"
+  }
+}
