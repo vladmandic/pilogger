@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "description": "Simple Logger for NodeJS",
   "main": "pilogger.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint --resolve-plugins-relative-to=/home/vlado/.nvm/versions/node/v14.0.0/lib *.js *.json && depcheck --ignores='eslint-plugin-*'"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vladmandic/pilogger.git"
