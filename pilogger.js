@@ -84,19 +84,19 @@ function setClientFile(file) {
 function log(tag, ...messages) {
   const time = moment(Date.now()).format(dateFormat);
   print(tags[tag], ...messages);
-  if (logFileOK) logStream.write(time, tags[tag], ...messages);
+  if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}`);
   global.ring.push({ tag, time, msg: combineMessages(...messages) });
   if (global.ring.length > ringLength) global.ring.shift();
 }
 
 function access(...messages) {
   const time = moment(Date.now()).format(dateFormat);
-  if (accessFileOK) accessStream.write(time, ...messages);
+  if (accessFileOK) accessStream.write(`${time} ${combinedMessage(...messages)}`);
 }
 
 function client(...messages) {
   const time = moment(Date.now()).format(dateFormat);
-  if (clientFileOK) clientStream.write(time, ...messages);
+  if (clientFileOK) clientStream.write(`${time} ${combinedMessage(...messages)}`);
 }
 
 // config items
