@@ -91,12 +91,12 @@ function log(tag, ...messages) {
 
 function access(...messages) {
   const time = moment(Date.now()).format(dateFormat);
-  if (accessFileOK) accessStream.write(`${time} ${combinedMessage(...messages)}`);
+  if (accessFileOK) accessStream.write(`${time} ${combineMessages(...messages)}`);
 }
 
 function client(...messages) {
   const time = moment(Date.now()).format(dateFormat);
-  if (clientFileOK) clientStream.write(`${time} ${combinedMessage(...messages)}`);
+  if (clientFileOK) clientStream.write(`${time} ${combineMessages(...messages)}`);
 }
 
 // config items
