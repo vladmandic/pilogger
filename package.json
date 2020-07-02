@@ -1,6 +1,6 @@
 {
   "name": "pilogger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple Logger for NodeJS",
   "main": "pilogger.js",
   "scripts": {
@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/vladmandic/pilogger#readme",
   "dependencies": {
-    "chalk": "^4.0.0",
-    "moment": "^2.25.1"
+    "chalk": "^4.1.0",
+    "moment": "^2.27.0"
   },
   "devDependencies": {
-    "eslint-config-airbnb-base": "^14.1.0"
+    "eslint-config-airbnb-base": "^14.2.0"
   }
 }
