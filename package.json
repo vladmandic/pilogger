@@ -1,6 +1,6 @@
 {
   "name": "pilogger",
-  "version": "0.0.2",
+  "version": "0.1.1",
   "description": "Simple Logger for NodeJS",
   "main": "pilogger.js",
   "scripts": {
