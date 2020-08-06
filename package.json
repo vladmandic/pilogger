@@ -1,5 +1,5 @@
 {
-  "name": "pilogger",
+  "name": "@vladmandic/pilogger",
   "version": "0.1.1",
   "description": "Simple Logger for NodeJS",
   "main": "pilogger.js",
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/vladmandic/pilogger.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/vladmandic"
+    "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [
     "logger"
