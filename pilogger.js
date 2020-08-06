@@ -86,8 +86,8 @@ async function log(tag, ...messages) {
   const time = moment(Date.now()).format(dateFormat);
   print(tags[tag], ...messages);
   if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
-  global.ring.push({ tag, time, msg: combineMessages(...messages) });
-  if (global.ring.length > ringLength) global.ring.shift();
+  ring.push({ tag, time, msg: combineMessages(...messages) });
+  if (ring.length > ringLength) ring.shift();
 }
 
 async function access(...messages) {
