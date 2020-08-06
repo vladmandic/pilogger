@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/vladmandic/pilogger.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/vladmandic"
+  },
   "keywords": [
     "logger"
   ],
