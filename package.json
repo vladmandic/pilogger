@@ -24,6 +24,8 @@
     "moment": "^2.27.0"
   },
   "devDependencies": {
+    "eslint": "^7.6.0",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-config-airbnb-base": "^14.2.0"
   }
 }

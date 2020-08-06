@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const moment = require('moment');
 
-global.ring = [];
+const ring = [];
 let dateFormat = 'YYYY-MM-DD HH:mm:ss';
 let ringLength = 100;
 const tags = [];
@@ -35,6 +35,7 @@ function setRingLength() {
 
 function combineMessages(...messages) {
   let msg = '';
+  // eslint-disable-next-line no-restricted-syntax
   for (const message of messages) {
     msg += typeof message === 'object' ? JSON.stringify(message) : message;
     msg += ' ';
@@ -81,7 +82,7 @@ function setClientFile(file) {
   });
 }
 
-function log(tag, ...messages) {
+async function log(tag, ...messages) {
   const time = moment(Date.now()).format(dateFormat);
   print(tags[tag], ...messages);
   if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
@@ -89,16 +90,27 @@ function log(tag, ...messages) {
   if (global.ring.length > ringLength) global.ring.shift();
 }
 
-function access(...messages) {
+async function access(...messages) {
   const time = moment(Date.now()).format(dateFormat);
   if (accessFileOK) accessStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
-function client(...messages) {
+async function client(...messages) {
   const time = moment(Date.now()).format(dateFormat);
   if (clientFileOK) clientStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
+function configure(options) {
+  if (!options) return;
+  if (options.dateFormat) dateFormat = options.dateFormat;
+  if (options.ringLength) ringLength = options.ringLength;
+  if (options.logFile) setLogFile(options.logFile);
+  if (options.accessFile) setAccessFile(options.accessFile);
+  if (options.clientFile) setClientFile(options.clientFile);
+}
+
+// local ring buffer
+exports.ring = ring;
 // config items
 exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;
@@ -119,3 +131,5 @@ exports.access = (...message) => access(...message);
 // simple logging to client file
 exports.clientFile = setClientFile;
 exports.client = (...message) => client(...message);
+// configure log object
+exports.configure = configure;
