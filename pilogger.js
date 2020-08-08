@@ -14,6 +14,7 @@ tags.warn = chalk.yellow('WARN: ');
 tags.data = chalk.green('DATA: ');
 tags.error = chalk.red('ERROR: ');
 tags.fatal = chalk.bold.red('FATAL: ');
+tags.timed = chalk.magentaBright('TIMED: ');
 tags.state = chalk.magenta('STATE: ');
 let logStream = null;
 let logFile = null;
@@ -82,6 +83,23 @@ function setClientFile(file) {
   });
 }
 
+async function timed(t0, ...messages) {
+  if (arguments.length < 2) {
+    messages = [t0];
+    t0 = process.hrtime.bigint();
+  }
+  const t1 = process.hrtime.bigint();
+  let elapsed = 0;
+  try {
+    elapsed = parseInt(t1 - t0, 10);
+  } catch { /**/ }
+  elapsed = Math.round(elapsed / 1000000).toLocaleString();
+  const time = moment(Date.now()).format(dateFormat);
+  // eslint-disable-next-line no-console
+  console.log(time, tags.timed, `${elapsed} ms`, ...messages);
+  if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed} ms ${combineMessages(...messages)}\n`);
+}
+
 async function log(tag, ...messages) {
   const time = moment(Date.now()).format(dateFormat);
   print(tags[tag], ...messages);
@@ -109,6 +127,13 @@ function configure(options) {
   if (options.clientFile) setClientFile(options.clientFile);
 }
 
+function test() {
+  const t0 = process.hrtime.bigint();
+  setTimeout(() => timed(t0, 'Test function execution'), 1000);
+}
+
+if (!module.parent) test();
+
 // local ring buffer
 exports.ring = ring;
 // config items
@@ -116,6 +141,8 @@ exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;
 // simple replacement for console.log
 exports.console = print;
+// log with timing
+exports.timed = timed;
 // simple logging to application log
 exports.logFile = setLogFile;
 exports.blank = (...message) => log('blank', ...message);

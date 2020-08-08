@@ -13,5 +13,6 @@
       "airbnb-base"
   ],
   "rules": {
+    "no-param-reassign": "off"
   }
 }
