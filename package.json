@@ -17,7 +17,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "keywords": [
-    "logger"
+    "logger",
+    "color-logger",
+    "performance-measure"
   ],
   "author": "Vladimir Mandic <mandic00@live.com>",
   "license": "MIT",
