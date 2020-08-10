@@ -23,63 +23,81 @@ This module is written in pure ES6 with minimal dependencies.
 Configuration is optional.  
 If not configured, logging will be to console only and with default format  
 
-    const log = require('pilogger');
-    const options = {
-      options.dateFormat: 'YYYY-MM-DD HH:mm:ss',
-      ringLength: 100,
-      logFile: './application.log',
-      accessFile: './accesss.log',
-      clientFile: './client.log',
-    }
-    log.configure(options);
+```js
+const log = require('pilogger');
+const options = {
+  options.dateFormat: 'YYYY-MM-DD HH:mm:ss',
+  ringLength: 100,
+  logFile: './application.log',
+  accessFile: './accesss.log',
+  clientFile: './client.log',
+}
+log.configure(options);
+```
 
 ## Usage
 
 Messages that are printed to console only, useful for debugging
 
-    log.print(...msg);
+```js
+  log.print(...msg);
+```
 
 Messages that are mirrored to console and `logFile` (if set), each one prefixed and color coded
 
-    log.blank(...msg);
-    log.data(...msg);
-    log.state(...msg);
-    log.info(...msg);
-    log.warn(...msg);
-    log.error(...msg);
+```js
+  log.blank(...msg);
+  log.data(...msg);
+  log.state(...msg);
+  log.info(...msg);
+  log.warn(...msg);
+  log.error(...msg);
+```
 
 Example output (note that markdown rules strip colored output):
 
-    2020-08-08 10:36:55 INFO:  piscan version 0.0.1
-    2020-08-08 10:36:55 INFO:  User: root Platform: linux Arch: x64 Node: v14.4.0
-    2020-08-08 10:36:55 STATE: Running as root with full capabilities
-    2020-08-08 10:37:08 DATA:  host: pi ip: 192.168.0.100 time: 12,210 
-    2020-08-08 10:37:10 DATA:  mac: DC:A6:32:1B:74:D5 vendor: Raspberry Pi os: Linux 5.4
-    2020-08-08 10:37:12 DATA:  ports: 22,139,445,514,873
+```json
+  2020-08-08 10:36:55 INFO:  piscan version 0.0.1
+  2020-08-08 10:36:55 INFO:  User: root Platform: linux Arch: x64 Node: v14.4.0
+  2020-08-08 10:36:55 STATE: Running as root with full capabilities
+  2020-08-08 10:37:08 DATA:  host: pi ip: 192.168.0.100 time: 12,210
+  2020-08-08 10:37:10 DATA:  mac: DC:A6:32:1B:74:D5 vendor: Raspberry Pi os: Linux 5.4
+  2020-08-08 10:37:12 DATA:  ports: 22,139,445,514,873
+```
 
 Messages that are mirrored to console and `logFile` (if set), each one prefixed and color coded and with time measurement
 
-    const t0 = process.hrtime.bigint();
-    // do your stuff here
-    log.timed(t0, ...msg);
+```js
+  const t0 = process.hrtime.bigint();
+  // do your stuff here
+  log.timed(t0, ...msg);
+```
 
 Example output:
 
-    2020-08-08 10:39:59 TIMED:  1,004 ms Test function execution
+```json
+  2020-08-08 10:39:59 TIMED:  1,004 ms Test function execution
+```
 
 Messages that are output to `accessFile` (if set) only  
 Useful for detailed application access log that you don't want printed to console
 
-    log.access(...msg);
+```js
+  log.access(...msg);
+```
 
 Messages that are output to `clientFile` (if set) only  
 Useful for logging of any other messages that you don't want printed to console
 
-    log.client(...msg);
+```js
+  log.client(...msg);
+```
 
 Access to history ring buffer.  
 `obj.time` is message timestamp, `obj.tag` is message type (info, state, data, warn, error), `obj.msg` is parsed & concatened message string
 
-    for (const line in log.ring) {
-      console.log(log.ring[line].time, log.ring[line].tag), log.ring[line].msg);
-    }
+```js
+  for (const line in log.ring) {
+    console.log(log.ring[line].time, log.ring[line].tag), log.ring[line].msg);
+  }
+```
