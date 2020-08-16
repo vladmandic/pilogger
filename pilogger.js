@@ -1,3 +1,4 @@
+const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
@@ -6,16 +7,6 @@ const moment = require('moment');
 const ring = [];
 let dateFormat = 'YYYY-MM-DD HH:mm:ss';
 let ringLength = 100;
-const tags = [];
-tags.blank = '';
-tags.continue = ':       ';
-tags.info = chalk.cyan('INFO: ');
-tags.warn = chalk.yellow('WARN: ');
-tags.data = chalk.green('DATA: ');
-tags.error = chalk.red('ERROR: ');
-tags.fatal = chalk.bold.red('FATAL: ');
-tags.timed = chalk.magentaBright('TIMED: ');
-tags.state = chalk.magenta('STATE: ');
 let logStream = null;
 let logFile = null;
 let logFileOK = false;
@@ -25,6 +16,17 @@ let accessFileOK = false;
 let clientStream = null;
 let clientFile = null;
 let clientFileOK = false;
+const tags = {
+  blank: '',
+  continue: ':       ',
+  info: chalk.cyan('INFO: '),
+  warn: chalk.yellow('WARN: '),
+  data: chalk.green('DATA: '),
+  error: chalk.red('ERROR: '),
+  fatal: chalk.bold.red('FATAL: '),
+  timed: chalk.magentaBright('TIMED: '),
+  state: chalk.magenta('STATE: '),
+};
 
 function setDateFormat(dt) {
   dateFormat = dt;
@@ -52,7 +54,7 @@ function print(...messages) {
 
 function setLogFile(file) {
   logFile = file;
-  print(tags.state, 'Application log set to', path.resolve(logFile));
+  // print(tags.state, 'Application log set to', path.resolve(logFile));
   logFileOK = true;
   logStream = fs.createWriteStream(path.resolve(logFile), { flags: 'a' });
   logStream.on('error', (e) => {
@@ -63,7 +65,7 @@ function setLogFile(file) {
 
 function setAccessFile(file) {
   accessFile = file;
-  print(tags.state, 'Access log set to', path.resolve(accessFile));
+  // print(tags.state, 'Access log set to', path.resolve(accessFile));
   accessFileOK = true;
   accessStream = fs.createWriteStream(path.resolve(accessFile), { flags: 'a' });
   accessStream.on('error', (e) => {
@@ -74,7 +76,7 @@ function setAccessFile(file) {
 
 function setClientFile(file) {
   clientFile = file;
-  print(tags.state, 'Client log set to', path.resolve(clientFile));
+  // print(tags.state, 'Client log set to', path.resolve(clientFile));
   clientFileOK = true;
   clientStream = fs.createWriteStream(path.resolve(clientFile), { flags: 'a' });
   clientStream.on('error', (e) => {
@@ -127,7 +129,17 @@ function configure(options) {
   if (options.clientFile) setClientFile(options.clientFile);
 }
 
+function header() {
+  const node = JSON.parse(fs.readFileSync('./package.json'));
+  log('info', node.name, 'version', node.version);
+  log('info', 'User:', os.userInfo().username, 'Platform:', process.platform, 'Arch:', process.arch, 'Node:', process.version);
+  if (logFile && logFileOK) print(tags.state, 'Application log set to', path.resolve(logFile));
+  if (accessFile && accessFileOK) print(tags.state, 'Access log set to', path.resolve(logFile));
+  if (clientFile && clientFileOK) print(tags.state, 'Client log set to', path.resolve(logFile));
+}
+
 function test() {
+  header();
   const t0 = process.hrtime.bigint();
   setTimeout(() => timed(t0, 'Test function execution'), 1000);
 }
@@ -160,3 +172,5 @@ exports.clientFile = setClientFile;
 exports.client = (...message) => client(...message);
 // configure log object
 exports.configure = configure;
+// print basic header
+exports.header = header;
