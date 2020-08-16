@@ -1,6 +1,6 @@
 {
   "name": "@vladmandic/pilogger",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Simple Logger for NodeJS",
   "main": "pilogger.js",
   "engines": {
