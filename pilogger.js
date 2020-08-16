@@ -133,9 +133,9 @@ function header() {
   const node = JSON.parse(fs.readFileSync('./package.json'));
   log('info', node.name, 'version', node.version);
   log('info', 'User:', os.userInfo().username, 'Platform:', process.platform, 'Arch:', process.arch, 'Node:', process.version);
-  if (logFile && logFileOK) print(tags.state, 'Application log set to', path.resolve(logFile));
-  if (accessFile && accessFileOK) print(tags.state, 'Access log set to', path.resolve(logFile));
-  if (clientFile && clientFileOK) print(tags.state, 'Client log set to', path.resolve(logFile));
+  if (logFile && logFileOK) print(tags.state, 'Application log:', path.resolve(logFile));
+  if (accessFile && accessFileOK) print(tags.state, 'Access log:', path.resolve(logFile));
+  if (clientFile && clientFileOK) print(tags.state, 'Client log:', path.resolve(logFile));
 }
 
 function test() {
