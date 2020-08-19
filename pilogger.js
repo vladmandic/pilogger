@@ -4,6 +4,8 @@ const path = require('path');
 const chalk = require('chalk');
 const moment = require('moment');
 
+const ctx = new chalk.Instance({ level: 2 });
+
 const ring = [];
 let dateFormat = 'YYYY-MM-DD HH:mm:ss';
 let ringLength = 100;
@@ -19,13 +21,13 @@ let clientFileOK = false;
 const tags = {
   blank: '',
   continue: ':       ',
-  info: chalk.cyan('INFO: '),
-  warn: chalk.yellow('WARN: '),
-  data: chalk.green('DATA: '),
-  error: chalk.red('ERROR: '),
-  fatal: chalk.bold.red('FATAL: '),
-  timed: chalk.magentaBright('TIMED: '),
-  state: chalk.magenta('STATE: '),
+  info: ctx.cyan('INFO: '),
+  warn: ctx.yellow('WARN: '),
+  data: ctx.green('DATA: '),
+  error: ctx.red('ERROR: '),
+  fatal: ctx.bold.red('FATAL: '),
+  timed: ctx.magentaBright('TIMED: '),
+  state: ctx.magenta('STATE: '),
 };
 
 function setDateFormat(dt) {
@@ -141,6 +143,7 @@ function header() {
 function test() {
   header();
   const t0 = process.hrtime.bigint();
+  log('info', 'Color support:', chalk.supportsColor);
   setTimeout(() => timed(t0, 'Test function execution'), 1000);
 }
 
