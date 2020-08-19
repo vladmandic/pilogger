@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 const moment = require('moment');
+const { Console } = require('console');
 
 const ctx = new chalk.Instance({ level: 2 });
 
@@ -29,6 +30,25 @@ const tags = {
   timed: ctx.magentaBright('TIMED: '),
   state: ctx.magenta('STATE: '),
 };
+let inspectOptions = {
+  showHidden: true,
+  depth: 5,
+  colors: true,
+  showProxy: true,
+  maxArrayLength: 1024,
+  maxStringLength: 10240,
+  breakLength: 200,
+  compact: 64,
+  sorted: false,
+  getters: true,
+};
+let logger = new Console({
+  stdout: process.stdout,
+  stderr: process.stderr,
+  ignoreErrors: true,
+  groupIndentation: 2,
+  inspectOptions,
+});
 
 function setDateFormat(dt) {
   dateFormat = dt;
@@ -40,7 +60,6 @@ function setRingLength() {
 
 function combineMessages(...messages) {
   let msg = '';
-  // eslint-disable-next-line no-restricted-syntax
   for (const message of messages) {
     msg += typeof message === 'object' ? JSON.stringify(message) : message;
     msg += ' ';
@@ -50,13 +69,11 @@ function combineMessages(...messages) {
 
 function print(...messages) {
   const time = moment(Date.now()).format(dateFormat);
-  // eslint-disable-next-line no-console
-  console.log(time, ...messages);
+  logger.log(time, ...messages);
 }
 
 function setLogFile(file) {
   logFile = file;
-  // print(tags.state, 'Application log set to', path.resolve(logFile));
   logFileOK = true;
   logStream = fs.createWriteStream(path.resolve(logFile), { flags: 'a' });
   logStream.on('error', (e) => {
@@ -67,7 +84,6 @@ function setLogFile(file) {
 
 function setAccessFile(file) {
   accessFile = file;
-  // print(tags.state, 'Access log set to', path.resolve(accessFile));
   accessFileOK = true;
   accessStream = fs.createWriteStream(path.resolve(accessFile), { flags: 'a' });
   accessStream.on('error', (e) => {
@@ -78,7 +94,6 @@ function setAccessFile(file) {
 
 function setClientFile(file) {
   clientFile = file;
-  // print(tags.state, 'Client log set to', path.resolve(clientFile));
   clientFileOK = true;
   clientStream = fs.createWriteStream(path.resolve(clientFile), { flags: 'a' });
   clientStream.on('error', (e) => {
@@ -99,8 +114,7 @@ async function timed(t0, ...messages) {
   } catch { /**/ }
   elapsed = Math.round(elapsed / 1000000).toLocaleString();
   const time = moment(Date.now()).format(dateFormat);
-  // eslint-disable-next-line no-console
-  console.log(time, tags.timed, `${elapsed} ms`, ...messages);
+  logger.log(time, tags.timed, `${elapsed} ms`, ...messages);
   if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed} ms ${combineMessages(...messages)}\n`);
 }
 
@@ -129,6 +143,14 @@ function configure(options) {
   if (options.logFile) setLogFile(options.logFile);
   if (options.accessFile) setAccessFile(options.accessFile);
   if (options.clientFile) setClientFile(options.clientFile);
+  if (options.inspect) inspectOptions = { ...inspectOptions, ...options.inspect };
+  logger = new Console({
+    stdout: process.stdout,
+    stderr: process.stderr,
+    ignoreErrors: true,
+    groupIndentation: 2,
+    inspectOptions,
+  });
 }
 
 function header() {
@@ -145,6 +167,9 @@ function test() {
   const t0 = process.hrtime.bigint();
   log('info', 'Color support:', chalk.supportsColor);
   setTimeout(() => timed(t0, 'Test function execution'), 1000);
+  const node = JSON.parse(fs.readFileSync('./package.json'));
+  // configure({ inspect: { colors: false } });
+  logger.log(node);
 }
 
 if (!module.parent) test();
@@ -154,7 +179,7 @@ exports.ring = ring;
 // config items
 exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;
-// simple replacement for console.log
+// simple replacement for logger.log
 exports.console = print;
 // log with timing
 exports.timed = timed;

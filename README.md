@@ -22,6 +22,7 @@ This module is written in pure ES6 with minimal dependencies.
 
 Configuration is optional.  
 If not configured, logging will be to console only and with default format  
+Configuring inspect options controls how object output is handled  
 
 ```js
 const log = require('pilogger');
@@ -31,6 +32,18 @@ const options = {
   logFile: './application.log',
   accessFile: './accesss.log',
   clientFile: './client.log',
+  inspect: {
+    showHidden: true,
+    depth: 5,
+    colors: true,
+    showProxy: true,
+    maxArrayLength: 1024,
+    maxStringLength: 10240,
+    breakLength: 200,
+    compact: 64,
+    sorted: false,
+    getters: true,
+  }
 }
 log.configure(options);
 ```
