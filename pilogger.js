@@ -2,7 +2,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
-const moment = require('moment');
+const dayjs = require('dayjs');
 const { Console } = require('console');
 
 const ctx = new chalk.Instance({ level: 2 });
@@ -68,7 +68,7 @@ function combineMessages(...messages) {
 }
 
 function print(...messages) {
-  const time = moment(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(dateFormat);
   logger.log(time, ...messages);
 }
 
@@ -113,13 +113,13 @@ async function timed(t0, ...messages) {
     elapsed = parseInt(t1 - t0, 10);
   } catch { /**/ }
   elapsed = Math.round(elapsed / 1000000).toLocaleString();
-  const time = moment(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(dateFormat);
   logger.log(time, tags.timed, `${elapsed} ms`, ...messages);
   if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed} ms ${combineMessages(...messages)}\n`);
 }
 
 async function log(tag, ...messages) {
-  const time = moment(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(dateFormat);
   print(tags[tag], ...messages);
   if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
   ring.push({ tag, time, msg: combineMessages(...messages) });
@@ -127,12 +127,12 @@ async function log(tag, ...messages) {
 }
 
 async function access(...messages) {
-  const time = moment(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(dateFormat);
   if (accessFileOK) accessStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
 async function client(...messages) {
-  const time = moment(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(dateFormat);
   if (clientFileOK) clientStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
