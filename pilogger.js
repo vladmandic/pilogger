@@ -154,7 +154,10 @@ function configure(options) {
 }
 
 function header() {
-  const node = JSON.parse(fs.readFileSync('./package.json'));
+  const f = './package.json';
+  if (!fs.existsSync(f)) return;
+  const node = JSON.parse(fs.readFileSync(f));
+  process.title = node.name;
   log('info', node.name, 'version', node.version);
   log('info', 'User:', os.userInfo().username, 'Platform:', process.platform, 'Arch:', process.arch, 'Node:', process.version);
   if (logFile && logFileOK) print(tags.state, 'Application log:', path.resolve(logFile));
