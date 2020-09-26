@@ -30,9 +30,9 @@
   },
   "homepage": "https://github.com/vladmandic/pilogger#readme",
   "dependencies": {
-    "chalk": "^4.1.0"
   },
   "devDependencies": {
+    "chalk": "^4.1.0",
     "dayjs": "^1.8.35",
     "esbuild": "^0.7.6"
   }
