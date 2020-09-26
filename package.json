@@ -1,6 +1,6 @@
 {
   "name": "@vladmandic/pilogger",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Simple Logger for NodeJS",
   "main": "dist/pilogger.js",
   "engines": {
@@ -29,8 +29,7 @@
     "url": "https://github.com/vladmandic/pilogger/issues"
   },
   "homepage": "https://github.com/vladmandic/pilogger#readme",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "chalk": "^4.1.0",
     "dayjs": "^1.8.35",
