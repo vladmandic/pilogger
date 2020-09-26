@@ -2,13 +2,13 @@
   "name": "@vladmandic/pilogger",
   "version": "0.2.2",
   "description": "Simple Logger for NodeJS",
-  "main": "pilogger.js",
+  "main": "dist/pilogger.js",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "node ./pilogger.js",
-    "lint": "eslint *.js"
+    "start": "node ./src/pilogger.js",
+    "build": "esbuild --outdir=dist --target=es2018 --platform=node --format=cjs --color=true --bundle src/pilogger.js"
   },
   "repository": {
     "type": "git",
@@ -33,5 +33,7 @@
     "chalk": "^4.1.0",
     "dayjs": "^1.8.35"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "esbuild": "^0.7.6"
+  }
 }
