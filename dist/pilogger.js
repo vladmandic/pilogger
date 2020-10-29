@@ -1531,12 +1531,12 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
     typeof exports2 == "object" && typeof module2 != "undefined" ? module2.exports = e() : typeof define == "function" && define.amd ? define(e) : t.dayjs = e();
   }(exports2, function() {
     "use strict";
-    var t = "millisecond", e = "second", n = "minute", r = "hour", i = "day", s = "week", u = "month", a = "quarter", o = "year", f = "date", h = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d+)?$/, c = /\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, d = function(t2, e2, n2) {
+    var t = "millisecond", e = "second", n = "minute", r = "hour", i = "day", s = "week", u = "month", a = "quarter", o = "year", f = "date", h = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d+)?$/, c = /\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, d = {name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_")}, $ = function(t2, e2, n2) {
       var r2 = String(t2);
       return !r2 || r2.length >= e2 ? t2 : "" + Array(e2 + 1 - r2.length).join(n2) + t2;
-    }, $ = {s: d, z: function(t2) {
+    }, l = {s: $, z: function(t2) {
       var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r2 = Math.floor(n2 / 60), i2 = n2 % 60;
-      return (e2 <= 0 ? "+" : "-") + d(r2, 2, "0") + ":" + d(i2, 2, "0");
+      return (e2 <= 0 ? "+" : "-") + $(r2, 2, "0") + ":" + $(i2, 2, "0");
     }, m: function t2(e2, n2) {
       if (e2.date() < n2.date())
         return -t2(n2, e2);
@@ -1548,8 +1548,8 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
       return {M: u, y: o, w: s, d: i, D: f, h: r, m: n, s: e, ms: t, Q: a}[h2] || String(h2 || "").toLowerCase().replace(/s$/, "");
     }, u: function(t2) {
       return t2 === void 0;
-    }}, l = {name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_")}, y = "en", M = {};
-    M[y] = l;
+    }}, y = "en", M = {};
+    M[y] = d;
     var m = function(t2) {
       return t2 instanceof S;
     }, D = function(t2, e2, n2) {
@@ -1568,9 +1568,9 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
         return t2.clone();
       var n2 = typeof e2 == "object" ? e2 : {};
       return n2.date = t2, n2.args = arguments, new S(n2);
-    }, g = $;
+    }, g = l;
     g.l = D, g.i = m, g.w = function(t2, e2) {
-      return v(t2, {locale: e2.$L, utc: e2.$u, $offset: e2.$offset});
+      return v(t2, {locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset});
     };
     var S = function() {
       function d2(t2) {
@@ -1594,7 +1594,7 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
             }
           }
           return new Date(e2);
-        }(t2), this.init();
+        }(t2), this.$x = t2.x || {}, this.init();
       }, $2.init = function() {
         var t2 = this.$d;
         this.$y = t2.getFullYear(), this.$M = t2.getMonth(), this.$D = t2.getDate(), this.$W = t2.getDay(), this.$H = t2.getHours(), this.$m = t2.getMinutes(), this.$s = t2.getSeconds(), this.$ms = t2.getMilliseconds();
@@ -1724,7 +1724,7 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
       return t2(e2, S, v), v;
     }, v.locale = D, v.isDayjs = m, v.unix = function(t2) {
       return v(1e3 * t2);
-    }, v.en = M[y], v.Ls = M, v;
+    }, v.en = M[y], v.Ls = M, v.p = {}, v;
   });
 });
 
