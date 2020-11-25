@@ -163,12 +163,12 @@ var require_color_name = __commonJS((exports2, module2) => {
 
 // node_modules/color-convert/conversions.js
 var require_conversions = __commonJS((exports2, module2) => {
-  const cssKeywords = require_color_name();
-  const reverseKeywords = {};
+  var cssKeywords = require_color_name();
+  var reverseKeywords = {};
   for (const key of Object.keys(cssKeywords)) {
     reverseKeywords[cssKeywords[key]] = key;
   }
-  const convert = {
+  var convert = {
     rgb: {channels: 3, labels: "rgb"},
     hsl: {channels: 3, labels: "hsl"},
     hsv: {channels: 3, labels: "hsv"},
@@ -832,7 +832,7 @@ var require_conversions = __commonJS((exports2, module2) => {
 
 // node_modules/color-convert/route.js
 var require_route = __commonJS((exports2, module2) => {
-  const conversions = require_conversions();
+  var conversions = require_conversions();
   function buildGraph() {
     const graph = {};
     const models = Object.keys(conversions);
@@ -898,10 +898,10 @@ var require_route = __commonJS((exports2, module2) => {
 
 // node_modules/color-convert/index.js
 var require_color_convert = __commonJS((exports2, module2) => {
-  const conversions = require_conversions();
-  const route = require_route();
-  const convert = {};
-  const models = Object.keys(conversions);
+  var conversions = require_conversions();
+  var route = require_route();
+  var convert = {};
+  var models = Object.keys(conversions);
   function wrapRaw(fn) {
     const wrappedFn = function(...args) {
       const arg0 = args[0];
@@ -958,21 +958,21 @@ var require_color_convert = __commonJS((exports2, module2) => {
 // node_modules/ansi-styles/index.js
 var require_ansi_styles = __commonJS((exports2, module2) => {
   "use strict";
-  const wrapAnsi16 = (fn, offset) => (...args) => {
+  var wrapAnsi16 = (fn, offset) => (...args) => {
     const code = fn(...args);
     return `[${code + offset}m`;
   };
-  const wrapAnsi256 = (fn, offset) => (...args) => {
+  var wrapAnsi256 = (fn, offset) => (...args) => {
     const code = fn(...args);
     return `[${38 + offset};5;${code}m`;
   };
-  const wrapAnsi16m = (fn, offset) => (...args) => {
+  var wrapAnsi16m = (fn, offset) => (...args) => {
     const rgb = fn(...args);
     return `[${38 + offset};2;${rgb[0]};${rgb[1]};${rgb[2]}m`;
   };
-  const ansi2ansi = (n) => n;
-  const rgb2rgb = (r, g, b) => [r, g, b];
-  const setLazyProperty = (object, property, get) => {
+  var ansi2ansi = (n) => n;
+  var rgb2rgb = (r, g, b) => [r, g, b];
+  var setLazyProperty = (object, property, get) => {
     Object.defineProperty(object, property, {
       get: () => {
         const value = get();
@@ -987,8 +987,8 @@ var require_ansi_styles = __commonJS((exports2, module2) => {
       configurable: true
     });
   };
-  let colorConvert;
-  const makeDynamicStyles = (wrap, targetSpace, identity, isBackground) => {
+  var colorConvert;
+  var makeDynamicStyles = (wrap, targetSpace, identity, isBackground) => {
     if (colorConvert === void 0) {
       colorConvert = require_color_convert();
     }
@@ -1106,11 +1106,11 @@ var require_has_flag = __commonJS((exports2, module2) => {
 // node_modules/supports-color/index.js
 var require_supports_color = __commonJS((exports2, module2) => {
   "use strict";
-  const os2 = require("os");
-  const tty = require("tty");
-  const hasFlag = require_has_flag();
-  const {env} = process;
-  let forceColor;
+  var os2 = require("os");
+  var tty = require("tty");
+  var hasFlag = require_has_flag();
+  var {env} = process;
+  var forceColor;
   if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false") || hasFlag("color=never")) {
     forceColor = 0;
   } else if (hasFlag("color") || hasFlag("colors") || hasFlag("color=true") || hasFlag("color=always")) {
@@ -1206,7 +1206,7 @@ var require_supports_color = __commonJS((exports2, module2) => {
 // node_modules/chalk/source/util.js
 var require_util = __commonJS((exports2, module2) => {
   "use strict";
-  const stringReplaceAll = (string, substring, replacer) => {
+  var stringReplaceAll = (string, substring, replacer) => {
     let index = string.indexOf(substring);
     if (index === -1) {
       return string;
@@ -1222,7 +1222,7 @@ var require_util = __commonJS((exports2, module2) => {
     returnValue += string.substr(endIndex);
     return returnValue;
   };
-  const stringEncaseCRLFWithFirstIndex = (string, prefix, postfix, index) => {
+  var stringEncaseCRLFWithFirstIndex = (string, prefix, postfix, index) => {
     let endIndex = 0;
     let returnValue = "";
     do {
@@ -1243,11 +1243,11 @@ var require_util = __commonJS((exports2, module2) => {
 // node_modules/chalk/source/templates.js
 var require_templates = __commonJS((exports2, module2) => {
   "use strict";
-  const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
-  const STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
-  const STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
-  const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.)|([^\\])/gi;
-  const ESCAPES = new Map([
+  var TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
+  var STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
+  var STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
+  var ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.)|([^\\])/gi;
+  var ESCAPES = new Map([
     ["n", "\n"],
     ["r", "\r"],
     ["t", "	"],
@@ -1355,33 +1355,33 @@ var require_templates = __commonJS((exports2, module2) => {
 // node_modules/chalk/source/index.js
 var require_source = __commonJS((exports2, module2) => {
   "use strict";
-  const ansiStyles = require_ansi_styles();
-  const {stdout: stdoutColor, stderr: stderrColor} = require_supports_color();
-  const {
+  var ansiStyles = require_ansi_styles();
+  var {stdout: stdoutColor, stderr: stderrColor} = require_supports_color();
+  var {
     stringReplaceAll,
     stringEncaseCRLFWithFirstIndex
   } = require_util();
-  const {isArray} = Array;
-  const levelMapping = [
+  var {isArray} = Array;
+  var levelMapping = [
     "ansi",
     "ansi",
     "ansi256",
     "ansi16m"
   ];
-  const styles = Object.create(null);
-  const applyOptions = (object, options = {}) => {
+  var styles = Object.create(null);
+  var applyOptions = (object, options = {}) => {
     if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
       throw new Error("The `level` option should be an integer from 0 to 3");
     }
     const colorLevel = stdoutColor ? stdoutColor.level : 0;
     object.level = options.level === void 0 ? colorLevel : options.level;
   };
-  class ChalkClass {
+  var ChalkClass = class {
     constructor(options) {
       return chalkFactory(options);
     }
-  }
-  const chalkFactory = (options) => {
+  };
+  var chalkFactory = (options) => {
     const chalk3 = {};
     applyOptions(chalk3, options);
     chalk3.template = (...arguments_) => chalkTag(chalk3.template, ...arguments_);
@@ -1412,7 +1412,7 @@ var require_source = __commonJS((exports2, module2) => {
       return builder;
     }
   };
-  const usedModels = ["rgb", "hex", "keyword", "hsl", "hsv", "hwb", "ansi", "ansi256"];
+  var usedModels = ["rgb", "hex", "keyword", "hsl", "hsv", "hwb", "ansi", "ansi256"];
   for (const model of usedModels) {
     styles[model] = {
       get() {
@@ -1436,7 +1436,7 @@ var require_source = __commonJS((exports2, module2) => {
       }
     };
   }
-  const proto = Object.defineProperties(() => {
+  var proto = Object.defineProperties(() => {
   }, {
     ...styles,
     level: {
@@ -1449,7 +1449,7 @@ var require_source = __commonJS((exports2, module2) => {
       }
     }
   });
-  const createStyler = (open, close, parent) => {
+  var createStyler = (open, close, parent) => {
     let openAll;
     let closeAll;
     if (parent === void 0) {
@@ -1467,7 +1467,7 @@ var require_source = __commonJS((exports2, module2) => {
       parent
     };
   };
-  const createBuilder = (self, _styler, _isEmpty) => {
+  var createBuilder = (self, _styler, _isEmpty) => {
     const builder = (...arguments_) => {
       if (isArray(arguments_[0]) && isArray(arguments_[0].raw)) {
         return applyStyle(builder, chalkTag(builder, ...arguments_));
@@ -1480,7 +1480,7 @@ var require_source = __commonJS((exports2, module2) => {
     builder._isEmpty = _isEmpty;
     return builder;
   };
-  const applyStyle = (self, string) => {
+  var applyStyle = (self, string) => {
     if (self.level <= 0 || !string) {
       return self._isEmpty ? "" : string;
     }
@@ -1501,8 +1501,8 @@ var require_source = __commonJS((exports2, module2) => {
     }
     return openAll + string + closeAll;
   };
-  let template;
-  const chalkTag = (chalk3, ...strings) => {
+  var template;
+  var chalkTag = (chalk3, ...strings) => {
     const [firstString] = strings;
     if (!isArray(firstString) || !isArray(firstString.raw)) {
       return strings.join(" ");
@@ -1518,7 +1518,7 @@ var require_source = __commonJS((exports2, module2) => {
     return template(chalk3, parts.join(""));
   };
   Object.defineProperties(Chalk.prototype, styles);
-  const chalk2 = Chalk();
+  var chalk2 = Chalk();
   chalk2.supportsColor = stdoutColor;
   chalk2.stderr = Chalk({level: stderrColor ? stderrColor.level : 0});
   chalk2.stderr.supportsColor = stderrColor;
@@ -1574,7 +1574,7 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
     };
     var S = function() {
       function d2(t2) {
-        this.$L = this.$L || D(t2.locale, null, true), this.parse(t2);
+        this.$L = D(t2.locale, null, true), this.parse(t2);
       }
       var $2 = d2.prototype;
       return $2.parse = function(t2) {
@@ -1729,26 +1729,26 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
 });
 
 // src/pilogger.js
-const os = require("os");
-const fs = require("fs");
-const path = require("path");
-const chalk = require_source();
-const dayjs = require_dayjs_min();
-const {Console} = require("console");
-const ctx = new chalk.Instance({level: 2});
-const ring = [];
-let dateFormat = "YYYY-MM-DD HH:mm:ss";
-let ringLength = 100;
-let logStream = null;
-let logFile = null;
-let logFileOK = false;
-let accessStream = null;
-let accessFile = null;
-let accessFileOK = false;
-let clientStream = null;
-let clientFile = null;
-let clientFileOK = false;
-const tags = {
+var os = require("os");
+var fs = require("fs");
+var path = require("path");
+var chalk = require_source();
+var dayjs = require_dayjs_min();
+var {Console} = require("console");
+var ctx = new chalk.Instance({level: 2});
+var ring = [];
+var dateFormat = "YYYY-MM-DD HH:mm:ss";
+var ringLength = 100;
+var logStream = null;
+var logFile = null;
+var logFileOK = false;
+var accessStream = null;
+var accessFile = null;
+var accessFileOK = false;
+var clientStream = null;
+var clientFile = null;
+var clientFileOK = false;
+var tags = {
   blank: "",
   continue: ":       ",
   info: ctx.cyan("INFO: "),
@@ -1759,7 +1759,7 @@ const tags = {
   timed: ctx.magentaBright("TIMED: "),
   state: ctx.magenta("STATE: ")
 };
-let inspectOptions = {
+var inspectOptions = {
   showHidden: true,
   depth: 5,
   colors: true,
@@ -1771,7 +1771,7 @@ let inspectOptions = {
   sorted: false,
   getters: true
 };
-let logger = new Console({
+var logger = new Console({
   stdout: process.stdout,
   stderr: process.stderr,
   ignoreErrors: true,
@@ -1909,8 +1909,11 @@ function test() {
   const node = JSON.parse(fs.readFileSync("./package.json"));
   logger.log(node);
 }
-if (!module.parent)
-  test();
+try {
+  if (require.main === module)
+    test();
+} catch (e) {
+}
 exports.ring = ring;
 exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;

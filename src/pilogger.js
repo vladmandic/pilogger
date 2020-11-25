@@ -175,7 +175,11 @@ function test() {
   logger.log(node);
 }
 
-if (!module.parent) test();
+try {
+  if (require.main === module) test();
+} catch {
+  //
+}
 
 // local ring buffer
 exports.ring = ring;
