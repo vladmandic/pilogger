@@ -2,7 +2,7 @@
   "name": "@vladmandic/pilogger",
   "version": "0.2.8",
   "description": "Simple Logger for NodeJS",
-  "main": "src/pilogger.js",
+  "main": "dist/pilogger.js",
   "engines": {
     "node": ">=12.0.0"
   },
