@@ -1,6 +1,4 @@
-# PiLogger
-
-Simple Logger for NodeJS
+# PiLogger: Simple Logger for NodeJS
 
 ## Why
 
