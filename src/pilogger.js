@@ -46,7 +46,7 @@ let logger = new Console({
   stdout: process.stdout,
   stderr: process.stderr,
   ignoreErrors: true,
-  groupIndentation: 2,
+  // groupIndentation: 2,
   inspectOptions,
 });
 
@@ -77,6 +77,7 @@ function setLogFile(file) {
   logFileOK = true;
   logStream = fs.createWriteStream(path.resolve(logFile), { flags: 'a' });
   logStream.on('error', (e) => {
+    // @ts-ignore
     print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
     logFileOK = false;
   });
@@ -87,6 +88,7 @@ function setAccessFile(file) {
   accessFileOK = true;
   accessStream = fs.createWriteStream(path.resolve(accessFile), { flags: 'a' });
   accessStream.on('error', (e) => {
+    // @ts-ignore
     print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
     accessFileOK = false;
   });
@@ -97,6 +99,7 @@ function setClientFile(file) {
   clientFileOK = true;
   clientStream = fs.createWriteStream(path.resolve(clientFile), { flags: 'a' });
   clientStream.on('error', (e) => {
+    // @ts-ignore
     print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
     clientFileOK = false;
   });
@@ -110,12 +113,12 @@ async function timed(t0, ...messages) {
   const t1 = process.hrtime.bigint();
   let elapsed = 0;
   try {
-    elapsed = parseInt(t1 - t0, 10);
+    elapsed = parseInt((t1 - t0).toString());
   } catch { /**/ }
-  elapsed = Math.round(elapsed / 1000000).toLocaleString();
+  elapsed = Math.round(elapsed / 1000000);
   const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, tags.timed, `${elapsed} ms`, ...messages);
-  if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed} ms ${combineMessages(...messages)}\n`);
+  logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
+  if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}\n`);
 }
 
 async function log(tag, ...messages) {
@@ -148,7 +151,7 @@ function configure(options) {
     stdout: process.stdout,
     stderr: process.stderr,
     ignoreErrors: true,
-    groupIndentation: 2,
+    // groupIndentation: 2,
     inspectOptions,
   });
 }
@@ -156,7 +159,7 @@ function configure(options) {
 function header() {
   const f = './package.json';
   if (!fs.existsSync(f)) return;
-  const node = JSON.parse(fs.readFileSync(f));
+  const node = JSON.parse(fs.readFileSync(f).toString());
   process.title = node.name;
   log('info', node.name, 'version', node.version);
   log('info', 'User:', os.userInfo().username, 'Platform:', process.platform, 'Arch:', process.arch, 'Node:', process.version);
@@ -170,7 +173,7 @@ function test() {
   const t0 = process.hrtime.bigint();
   log('info', 'Color support:', chalk.supportsColor);
   setTimeout(() => timed(t0, 'Test function execution'), 1000);
-  const node = JSON.parse(fs.readFileSync('./package.json'));
+  const node = JSON.parse(fs.readFileSync('./package.json').toString());
   // configure({ inspect: { colors: false } });
   logger.log(node);
 }

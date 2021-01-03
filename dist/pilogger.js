@@ -1531,7 +1531,7 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
     typeof exports2 == "object" && typeof module2 != "undefined" ? module2.exports = e() : typeof define == "function" && define.amd ? define(e) : t.dayjs = e();
   }(exports2, function() {
     "use strict";
-    var t = "millisecond", e = "second", n = "minute", r = "hour", i = "day", s = "week", u = "month", a = "quarter", o = "year", f = "date", h = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d+)?$/, c = /\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, d = {name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_")}, $ = function(t2, e2, n2) {
+    var t = "millisecond", e = "second", n = "minute", r = "hour", i = "day", s = "week", u = "month", a = "quarter", o = "year", f = "date", h = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?\.?(\d+)?$/, c = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, d = {name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_")}, $ = function(t2, e2, n2) {
       var r2 = String(t2);
       return !r2 || r2.length >= e2 ? t2 : "" + Array(e2 + 1 - r2.length).join(n2) + t2;
     }, l = {s: $, z: function(t2) {
@@ -1721,7 +1721,7 @@ var require_dayjs_min = __commonJS((exports2, module2) => {
         return this.$g(e2, t2[0], t2[1]);
       };
     }), v.extend = function(t2, e2) {
-      return t2(e2, S, v), v;
+      return t2.$i || (t2(e2, S, v), t2.$i = true), v;
     }, v.locale = D, v.isDayjs = m, v.unix = function(t2) {
       return v(1e3 * t2);
     }, v.en = M[y], v.Ls = M, v.p = {}, v;
@@ -1775,7 +1775,6 @@ var logger = new Console({
   stdout: process.stdout,
   stderr: process.stderr,
   ignoreErrors: true,
-  groupIndentation: 2,
   inspectOptions
 });
 function setDateFormat(dt) {
@@ -1831,14 +1830,14 @@ async function timed(t0, ...messages) {
   const t1 = process.hrtime.bigint();
   let elapsed = 0;
   try {
-    elapsed = parseInt(t1 - t0, 10);
+    elapsed = parseInt((t1 - t0).toString());
   } catch (e) {
   }
-  elapsed = Math.round(elapsed / 1e6).toLocaleString();
+  elapsed = Math.round(elapsed / 1e6);
   const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, tags.timed, `${elapsed} ms`, ...messages);
+  logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
   if (logFileOK)
-    logStream.write(`${tags.timed} ${time} ${elapsed} ms ${combineMessages(...messages)}
+    logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}
 `);
 }
 async function log(tag, ...messages) {
@@ -1882,7 +1881,6 @@ function configure(options) {
     stdout: process.stdout,
     stderr: process.stderr,
     ignoreErrors: true,
-    groupIndentation: 2,
     inspectOptions
   });
 }
@@ -1890,7 +1888,7 @@ function header() {
   const f = "./package.json";
   if (!fs.existsSync(f))
     return;
-  const node = JSON.parse(fs.readFileSync(f));
+  const node = JSON.parse(fs.readFileSync(f).toString());
   process.title = node.name;
   log("info", node.name, "version", node.version);
   log("info", "User:", os.userInfo().username, "Platform:", process.platform, "Arch:", process.arch, "Node:", process.version);
@@ -1906,7 +1904,7 @@ function test() {
   const t0 = process.hrtime.bigint();
   log("info", "Color support:", chalk.supportsColor);
   setTimeout(() => timed(t0, "Test function execution"), 1e3);
-  const node = JSON.parse(fs.readFileSync("./package.json"));
+  const node = JSON.parse(fs.readFileSync("./package.json").toString());
   logger.log(node);
 }
 try {
