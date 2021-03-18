@@ -33,6 +33,6 @@
   "devDependencies": {
     "chalk": "^4.1.0",
     "dayjs": "^1.10.4",
-    "esbuild": "^0.8.42"
+    "esbuild": "^0.9.3"
   }
 }
