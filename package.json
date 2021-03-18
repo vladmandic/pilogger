@@ -14,9 +14,6 @@
     "type": "git",
     "url": "git+https://github.com/vladmandic/pilogger.git"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "keywords": [
     "logger",
     "color-logger",
