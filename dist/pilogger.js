@@ -1744,14 +1744,14 @@ var clientFile = null;
 var clientFileOK = false;
 var tags = {
   blank: "",
-  continue: ":       ",
+  continue: ":     ",
   info: ctx.cyan("INFO: "),
   warn: ctx.yellow("WARN: "),
   data: ctx.green("DATA: "),
-  error: ctx.red("ERROR: "),
-  fatal: ctx.bold.red("FATAL: "),
-  timed: ctx.magentaBright("TIMED: "),
-  state: ctx.magenta("STATE: ")
+  error: ctx.red("ERROR:"),
+  fatal: ctx.bold.red("FATAL:"),
+  timed: ctx.magentaBright("TIMED:"),
+  state: ctx.magenta("STATE:")
 };
 var inspectOptions = {
   showHidden: true,
@@ -1836,7 +1836,10 @@ async function timed(t0, ...messages) {
 }
 async function log(tag, ...messages) {
   const time = dayjs(Date.now()).format(dateFormat);
-  print(tags[tag], ...messages);
+  if (tags[tag])
+    print(tags[tag], ...messages);
+  else
+    print(...messages);
   if (logFileOK)
     logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}
 `);
@@ -1900,6 +1903,14 @@ function test() {
   setTimeout(() => timed(t0, "Test function execution"), 1e3);
   const node = JSON.parse(fs.readFileSync("./package.json").toString());
   logger.log(node);
+  log("blank", "test blank");
+  log("continue", "test continue");
+  log("info", "test info");
+  log("state", "test state");
+  log("data", "test data");
+  log("warn", "test warn");
+  log("error", "test error");
+  log("fatal", "test fatal");
 }
 try {
   if (require.main === module)
@@ -1912,13 +1923,13 @@ exports.dateFormat = setDateFormat;
 exports.console = print;
 exports.timed = timed;
 exports.logFile = setLogFile;
-exports.blank = (...message) => log("blank", ...message);
-exports.warn = (...message) => log("warn", ...message);
+exports.blank = (...message) => log(...message);
 exports.info = (...message) => log("info", ...message);
+exports.state = (...message) => log("state", ...message);
 exports.data = (...message) => log("data", ...message);
+exports.warn = (...message) => log("warn", ...message);
 exports.error = (...message) => log("error", ...message);
 exports.fatal = (...message) => log("fatal", ...message);
-exports.state = (...message) => log("state", ...message);
 exports.accessFile = setAccessFile;
 exports.access = (...message) => access(...message);
 exports.clientFile = setClientFile;

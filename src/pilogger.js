@@ -21,14 +21,14 @@ let clientFile = null;
 let clientFileOK = false;
 const tags = {
   blank: '',
-  continue: ':       ',
+  continue: ':     ',
   info: ctx.cyan('INFO: '),
   warn: ctx.yellow('WARN: '),
   data: ctx.green('DATA: '),
-  error: ctx.red('ERROR: '),
-  fatal: ctx.bold.red('FATAL: '),
-  timed: ctx.magentaBright('TIMED: '),
-  state: ctx.magenta('STATE: '),
+  error: ctx.red('ERROR:'),
+  fatal: ctx.bold.red('FATAL:'),
+  timed: ctx.magentaBright('TIMED:'),
+  state: ctx.magenta('STATE:'),
 };
 let inspectOptions = {
   showHidden: true,
@@ -123,7 +123,8 @@ async function timed(t0, ...messages) {
 
 async function log(tag, ...messages) {
   const time = dayjs(Date.now()).format(dateFormat);
-  print(tags[tag], ...messages);
+  if (tags[tag]) print(tags[tag], ...messages);
+  else print(...messages);
   if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
   ring.push({ tag, time, msg: combineMessages(...messages) });
   if (ring.length > ringLength) ring.shift();
@@ -176,6 +177,14 @@ function test() {
   const node = JSON.parse(fs.readFileSync('./package.json').toString());
   // configure({ inspect: { colors: false } });
   logger.log(node);
+  log('blank', 'test blank');
+  log('continue', 'test continue');
+  log('info', 'test info');
+  log('state', 'test state');
+  log('data', 'test data');
+  log('warn', 'test warn');
+  log('error', 'test error');
+  log('fatal', 'test fatal');
 }
 
 try {
@@ -195,13 +204,13 @@ exports.console = print;
 exports.timed = timed;
 // simple logging to application log
 exports.logFile = setLogFile;
-exports.blank = (...message) => log('blank', ...message);
-exports.warn = (...message) => log('warn', ...message);
+exports.blank = (...message) => log(...message);
 exports.info = (...message) => log('info', ...message);
+exports.state = (...message) => log('state', ...message);
 exports.data = (...message) => log('data', ...message);
+exports.warn = (...message) => log('warn', ...message);
 exports.error = (...message) => log('error', ...message);
 exports.fatal = (...message) => log('fatal', ...message);
-exports.state = (...message) => log('state', ...message);
 // simple logging to access file
 exports.accessFile = setAccessFile;
 exports.access = (...message) => access(...message);
