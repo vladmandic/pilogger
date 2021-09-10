@@ -1,4 +1,7 @@
-var __commonJS = (cb, mod) => function __require() {
+var __require = typeof require !== "undefined" ? require : (x) => {
+  throw new Error('Dynamic require of "' + x + '" is not supported');
+};
+var __commonJS = (cb, mod) => function __require2() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 
@@ -1213,9 +1216,9 @@ var require_supports_color = __commonJS({
   }
 });
 
-// node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/util.js
+// node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/util.js
 var require_util = __commonJS({
-  "node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/util.js"(exports2, module2) {
+  "node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/util.js"(exports2, module2) {
     "use strict";
     var stringReplaceAll = (string, substring, replacer) => {
       let index = string.indexOf(substring);
@@ -1252,9 +1255,9 @@ var require_util = __commonJS({
   }
 });
 
-// node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/templates.js
+// node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/templates.js
 var require_templates = __commonJS({
-  "node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/templates.js"(exports2, module2) {
+  "node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/templates.js"(exports2, module2) {
     "use strict";
     var TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|\{[a-f\d]{1,6}\})|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
     var STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
@@ -1366,9 +1369,9 @@ var require_templates = __commonJS({
   }
 });
 
-// node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/index.js
+// node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/index.js
 var require_source = __commonJS({
-  "node_modules/.pnpm/chalk@4.1.1/node_modules/chalk/source/index.js"(exports2, module2) {
+  "node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/source/index.js"(exports2, module2) {
     "use strict";
     var ansiStyles = require_ansi_styles();
     var { stdout: stdoutColor, stderr: stderrColor } = require_supports_color();
@@ -1384,21 +1387,21 @@ var require_source = __commonJS({
       "ansi16m"
     ];
     var styles = Object.create(null);
-    var applyOptions = (object, options = {}) => {
-      if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
+    var applyOptions = (object, options2 = {}) => {
+      if (options2.level && !(Number.isInteger(options2.level) && options2.level >= 0 && options2.level <= 3)) {
         throw new Error("The `level` option should be an integer from 0 to 3");
       }
       const colorLevel = stdoutColor ? stdoutColor.level : 0;
-      object.level = options.level === void 0 ? colorLevel : options.level;
+      object.level = options2.level === void 0 ? colorLevel : options2.level;
     };
     var ChalkClass = class {
-      constructor(options) {
-        return chalkFactory(options);
+      constructor(options2) {
+        return chalkFactory(options2);
       }
     };
-    var chalkFactory = (options) => {
+    var chalkFactory = (options2) => {
       const chalk3 = {};
-      applyOptions(chalk3, options);
+      applyOptions(chalk3, options2);
       chalk3.template = (...arguments_) => chalkTag(chalk3.template, ...arguments_);
       Object.setPrototypeOf(chalk3, Chalk.prototype);
       Object.setPrototypeOf(chalk3.template, chalk3);
@@ -1408,8 +1411,8 @@ var require_source = __commonJS({
       chalk3.template.Instance = ChalkClass;
       return chalk3.template;
     };
-    function Chalk(options) {
-      return chalkFactory(options);
+    function Chalk(options2) {
+      return chalkFactory(options2);
     }
     for (const [styleName, style] of Object.entries(ansiStyles)) {
       styles[styleName] = {
@@ -1541,9 +1544,9 @@ var require_source = __commonJS({
   }
 });
 
-// node_modules/.pnpm/dayjs@1.10.6/node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.10.7/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/.pnpm/dayjs@1.10.6/node_modules/dayjs/dayjs.min.js"(exports2, module2) {
+  "node_modules/.pnpm/dayjs@1.10.7/node_modules/dayjs/dayjs.min.js"(exports2, module2) {
     !function(t, e) {
       typeof exports2 == "object" && typeof module2 != "undefined" ? module2.exports = e() : typeof define == "function" && define.amd ? define(e) : (t = typeof globalThis != "undefined" ? globalThis : t || self).dayjs = e();
     }(exports2, function() {
@@ -1755,17 +1758,16 @@ var dayjs = require_dayjs_min();
 var { Console } = require("console");
 var ctx = new chalk.Instance({ level: 2 });
 var ring = [];
-var dateFormat = "YYYY-MM-DD HH:mm:ss";
-var ringLength = 100;
-var logStream = null;
-var logFile = null;
-var logFileOK = false;
-var accessStream = null;
-var accessFile = null;
-var accessFileOK = false;
-var clientStream = null;
-var clientFile = null;
-var clientFileOK = false;
+var options = {
+  dateFormat: "YYYY-MM-DD HH:mm:ss",
+  ringLength: 100,
+  console: true
+};
+var streams = {
+  logFile: false,
+  accessFile: false,
+  clientFile: false
+};
 var tags = {
   blank: "",
   continue: ":     ",
@@ -1775,7 +1777,9 @@ var tags = {
   error: ctx.red("ERROR:"),
   fatal: ctx.bold.red("FATAL:"),
   timed: ctx.magentaBright("TIMED:"),
-  state: ctx.magenta("STATE:")
+  state: ctx.magenta("STATE:"),
+  verbose: ctx.bgGray.yellowBright("VERB: "),
+  debug: ctx.bgGray.redBright("DEBUG:")
 };
 var inspectOptions = {
   showHidden: true,
@@ -1796,10 +1800,10 @@ var logger = new Console({
   inspectOptions
 });
 function setDateFormat(dt) {
-  dateFormat = dt;
+  options.dateFormat = dt;
 }
 function setRingLength() {
-  ringLength = 100;
+  options.ringLength = 100;
 }
 function combineMessages(...messages) {
   let msg = "";
@@ -1810,35 +1814,45 @@ function combineMessages(...messages) {
   return msg;
 }
 function print(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, ...messages);
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (options.console)
+    logger.log(time, ...messages);
 }
 function setLogFile(file) {
-  logFile = file;
-  logFileOK = true;
-  logStream = fs.createWriteStream(path.resolve(logFile), { flags: "a" });
-  logStream.on("error", (e) => {
-    print(tags.error, "Cannot open application log", `${logFile}: ${e.code}`);
-    logFileOK = false;
-  });
+  if (typeof file !== "string")
+    return;
+  options.logFile = file;
+  streams.logFile = true;
+  streams.logStream = fs.createWriteStream(path.resolve(options.logFile || ""), { flags: "a" });
+  if (streams.logStream)
+    streams.logStream.on("error", (e) => {
+      print(tags.error, "Cannot open application log", `${options.logFile}: ${e.code}`);
+      streams.logFile = false;
+    });
 }
 function setAccessFile(file) {
-  accessFile = file;
-  accessFileOK = true;
-  accessStream = fs.createWriteStream(path.resolve(accessFile), { flags: "a" });
-  accessStream.on("error", (e) => {
-    print(tags.error, "Cannot open application log", `${logFile}: ${e.code}`);
-    accessFileOK = false;
-  });
+  if (typeof file !== "string")
+    return;
+  options.accessFile = file;
+  streams.accessFile = true;
+  streams.accessStream = fs.createWriteStream(path.resolve(options.accessFile), { flags: "a" });
+  if (streams.accessStream)
+    streams.accessStream.on("error", (e) => {
+      print(tags.error, "Cannot open application log", `${options.logFile}: ${e.code}`);
+      streams.accessFile = false;
+    });
 }
 function setClientFile(file) {
-  clientFile = file;
-  clientFileOK = true;
-  clientStream = fs.createWriteStream(path.resolve(clientFile), { flags: "a" });
-  clientStream.on("error", (e) => {
-    print(tags.error, "Cannot open application log", `${logFile}: ${e.code}`);
-    clientFileOK = false;
-  });
+  if (typeof file !== "string")
+    return;
+  options.clientFile = file;
+  streams.clientFile = true;
+  streams.clientStream = fs.createWriteStream(path.resolve(options.clientFile), { flags: "a" });
+  if (streams.clientStream)
+    streams.clientStream.on("error", (e) => {
+      print(tags.error, "Cannot open application log", `${options.logFile}: ${e.code}`);
+      streams.clientFile = false;
+    });
 }
 async function timed(t0, ...messages) {
   if (arguments.length < 2) {
@@ -1852,52 +1866,53 @@ async function timed(t0, ...messages) {
   } catch (e) {
   }
   elapsed = Math.round(elapsed / 1e6);
-  const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
-  if (logFileOK)
-    logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (options.console)
+    logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
+  if (streams.logFile)
+    streams.logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}
 `);
 }
 async function log(tag, ...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(options.dateFormat);
   if (tags[tag])
     print(tags[tag], ...messages);
   else
     print(...messages);
-  if (logFileOK)
-    logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}
+  if (streams.logFile && streams.logStream)
+    streams.logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}
 `);
   ring.push({ tag, time, msg: combineMessages(...messages) });
-  if (ring.length > ringLength)
+  if (ring.length > options.ringLength)
     ring.shift();
 }
 async function access(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  if (accessFileOK)
-    accessStream.write(`${time} ${combineMessages(...messages)}
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (streams.accessFile && streams.accessStream)
+    streams.accessStream.write(`${time} ${combineMessages(...messages)}
 `);
 }
 async function client(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  if (clientFileOK)
-    clientStream.write(`${time} ${combineMessages(...messages)}
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (streams.clientFile && streams.clientStream)
+    streams.clientStream.write(`${time} ${combineMessages(...messages)}
 `);
 }
-function configure(options) {
-  if (!options)
+function configure(userOptions) {
+  if (!userOptions)
     return;
-  if (options.dateFormat)
-    dateFormat = options.dateFormat;
-  if (options.ringLength)
-    ringLength = options.ringLength;
-  if (options.logFile)
+  if (userOptions.dateFormat)
+    options.dateFormat = options.dateFormat;
+  if (userOptions.ringLength)
+    options.ringLength = options.ringLength;
+  if (userOptions.logFile)
     setLogFile(options.logFile);
-  if (options.accessFile)
+  if (userOptions.accessFile)
     setAccessFile(options.accessFile);
-  if (options.clientFile)
+  if (userOptions.clientFile)
     setClientFile(options.clientFile);
-  if (options.inspect)
-    inspectOptions = { ...inspectOptions, ...options.inspect };
+  if (userOptions.inspect)
+    inspectOptions = { ...inspectOptions, ...userOptions.inspect };
   logger = new Console({
     stdout: process.stdout,
     stderr: process.stderr,
@@ -1913,40 +1928,36 @@ function header() {
   process.title = node.name;
   log("info", node.name, "version", node.version);
   log("info", "User:", os.userInfo().username, "Platform:", process.platform, "Arch:", process.arch, "Node:", process.version);
-  if (logFile && logFileOK)
-    print(tags.state, "Application log:", path.resolve(logFile));
-  if (accessFile && accessFileOK)
-    print(tags.state, "Access log:", path.resolve(logFile));
-  if (clientFile && clientFileOK)
-    print(tags.state, "Client log:", path.resolve(logFile));
+  if (options.logFile && streams.logFile)
+    print(tags.state, "Application log:", path.resolve(options.logFile));
+  if (options.accessFile && streams.accessFile)
+    print(tags.state, "Access log:", path.resolve(options.logFile));
+  if (options.clientFile && streams.clientFile)
+    print(tags.state, "Client log:", path.resolve(options.logFile));
 }
-function test() {
-  header();
-  const t0 = process.hrtime.bigint();
-  log("info", "Color support:", chalk.supportsColor);
-  setTimeout(() => timed(t0, "Test function execution"), 1e3);
-  const node = JSON.parse(fs.readFileSync("./package.json").toString());
-  logger.log(node);
-  log("blank", "test blank");
-  log("continue", "test continue");
-  log("info", "test info");
-  log("state", "test state");
-  log("data", "test data");
-  log("warn", "test warn");
-  log("error", "test error");
-  log("fatal", "test fatal");
-}
-try {
-  if (require.main === module)
-    test();
-} catch (e) {
+function headerJson() {
+  const f = "./package.json";
+  if (!fs.existsSync(f))
+    return;
+  const node = JSON.parse(fs.readFileSync(f).toString());
+  process.title = node.name;
+  log("info", { application: node.name, version: node.version });
+  log("info", { user: os.userInfo().username, platform: process.platform, arch: process.arch, node: process.version });
+  if (options.logFile || options.accessFile || options.clientFile)
+    print(tags.state, { log: path.resolve(options.logFile || ""), access: path.resolve(options.accessFile || ""), client: path.resolve(options.clientFile || "") });
 }
 exports.ring = ring;
+exports.header = header;
+exports.headerJson = headerJson;
 exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;
+exports.logFile = setLogFile;
+exports.accessFile = setAccessFile;
+exports.clientFile = setClientFile;
+exports.configure = configure;
+exports.options = options;
 exports.console = print;
 exports.timed = timed;
-exports.logFile = setLogFile;
 exports.blank = (...message) => log(...message);
 exports.info = (...message) => log("info", ...message);
 exports.state = (...message) => log("state", ...message);
@@ -1954,9 +1965,7 @@ exports.data = (...message) => log("data", ...message);
 exports.warn = (...message) => log("warn", ...message);
 exports.error = (...message) => log("error", ...message);
 exports.fatal = (...message) => log("fatal", ...message);
-exports.accessFile = setAccessFile;
+exports.verbose = (...message) => log("verbose", ...message);
+exports.debug = (...message) => log("debug", ...message);
 exports.access = (...message) => access(...message);
-exports.clientFile = setClientFile;
 exports.client = (...message) => client(...message);
-exports.configure = configure;
-exports.header = header;

@@ -8,17 +8,25 @@ const { Console } = require('console');
 const ctx = new chalk.Instance({ level: 2 });
 
 const ring = [];
-let dateFormat = 'YYYY-MM-DD HH:mm:ss';
-let ringLength = 100;
-let logStream = null;
-let logFile = null;
-let logFileOK = false;
-let accessStream = null;
-let accessFile = null;
-let accessFileOK = false;
-let clientStream = null;
-let clientFile = null;
-let clientFileOK = false;
+
+const options = {
+  dateFormat: 'YYYY-MM-DD HH:mm:ss',
+  ringLength: 100,
+  console: true,
+  // logFile: null,
+  // accessFile: null,
+  // clientFile: null,
+}
+
+const streams = {
+  logFile: false,
+  accessFile: false,
+  clientFile: false,
+  // logStream: null,
+  // accessStream: null,
+  // clientStream: null,
+}
+
 const tags = {
   blank: '',
   continue: ':     ',
@@ -29,8 +37,11 @@ const tags = {
   fatal: ctx.bold.red('FATAL:'),
   timed: ctx.magentaBright('TIMED:'),
   state: ctx.magenta('STATE:'),
+  verbose: ctx.bgGray.yellowBright('VERB: '),
+  debug: ctx.bgGray.redBright('DEBUG:')
 };
-let inspectOptions = {
+
+let inspectOptions = { // options passed to nodejs console constructor
   showHidden: true,
   depth: 5,
   colors: true,
@@ -42,20 +53,20 @@ let inspectOptions = {
   sorted: false,
   getters: true,
 };
+
 let logger = new Console({
   stdout: process.stdout,
   stderr: process.stderr,
   ignoreErrors: true,
-  // groupIndentation: 2,
   inspectOptions,
 });
 
 function setDateFormat(dt) {
-  dateFormat = dt;
+  options.dateFormat = dt;
 }
 
 function setRingLength() {
-  ringLength = 100;
+  options.ringLength = 100;
 }
 
 function combineMessages(...messages) {
@@ -68,40 +79,40 @@ function combineMessages(...messages) {
 }
 
 function print(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, ...messages);
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (options.console) logger.log(time, ...messages);
 }
 
 function setLogFile(file) {
-  logFile = file;
-  logFileOK = true;
-  logStream = fs.createWriteStream(path.resolve(logFile), { flags: 'a' });
-  logStream.on('error', (e) => {
-    // @ts-ignore
-    print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
-    logFileOK = false;
+  if (typeof file !== 'string') return;
+  options.logFile = file;
+  streams.logFile = true;
+  streams.logStream = fs.createWriteStream(path.resolve(options.logFile || ''), { flags: 'a' });
+  if (streams.logStream) streams.logStream.on('error', (e) => {
+    print(tags.error, 'Cannot open application log', `${options.logFile}: ${e.code}`);
+    streams.logFile = false;
   });
 }
 
 function setAccessFile(file) {
-  accessFile = file;
-  accessFileOK = true;
-  accessStream = fs.createWriteStream(path.resolve(accessFile), { flags: 'a' });
-  accessStream.on('error', (e) => {
-    // @ts-ignore
-    print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
-    accessFileOK = false;
+  if (typeof file !== 'string') return;
+  options.accessFile = file;
+  streams.accessFile = true;
+  streams.accessStream = fs.createWriteStream(path.resolve(options.accessFile), { flags: 'a' });
+  if (streams.accessStream) streams.accessStream.on('error', (e) => {
+    print(tags.error, 'Cannot open application log', `${options.logFile}: ${e.code}`);
+    streams.accessFile = false;
   });
 }
 
 function setClientFile(file) {
-  clientFile = file;
-  clientFileOK = true;
-  clientStream = fs.createWriteStream(path.resolve(clientFile), { flags: 'a' });
-  clientStream.on('error', (e) => {
-    // @ts-ignore
-    print(tags.error, 'Cannot open application log', `${logFile}: ${e.code}`);
-    clientFileOK = false;
+  if (typeof file !== 'string') return;
+  options.clientFile = file;
+  streams.clientFile = true;
+  streams.clientStream = fs.createWriteStream(path.resolve(options.clientFile), { flags: 'a' });
+  if (streams.clientStream) streams.clientStream.on('error', (e) => {
+    print(tags.error, 'Cannot open application log', `${options.logFile}: ${e.code}`);
+    streams.clientFile = false;
   });
 }
 
@@ -116,43 +127,42 @@ async function timed(t0, ...messages) {
     elapsed = parseInt((t1 - t0).toString());
   } catch { /**/ }
   elapsed = Math.round(elapsed / 1000000);
-  const time = dayjs(Date.now()).format(dateFormat);
-  logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
-  if (logFileOK) logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}\n`);
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (options.console) logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
+  if (streams.logFile) streams.logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}\n`);
 }
 
 async function log(tag, ...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
+  const time = dayjs(Date.now()).format(options.dateFormat);
   if (tags[tag]) print(tags[tag], ...messages);
   else print(...messages);
-  if (logFileOK) logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
+  if (streams.logFile && streams.logStream) streams.logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
   ring.push({ tag, time, msg: combineMessages(...messages) });
-  if (ring.length > ringLength) ring.shift();
+  if (ring.length > options.ringLength) ring.shift();
 }
 
 async function access(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  if (accessFileOK) accessStream.write(`${time} ${combineMessages(...messages)}\n`);
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (streams.accessFile && streams.accessStream) streams.accessStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
 async function client(...messages) {
-  const time = dayjs(Date.now()).format(dateFormat);
-  if (clientFileOK) clientStream.write(`${time} ${combineMessages(...messages)}\n`);
+  const time = dayjs(Date.now()).format(options.dateFormat);
+  if (streams.clientFile && streams.clientStream) streams.clientStream.write(`${time} ${combineMessages(...messages)}\n`);
 }
 
-function configure(options) {
-  if (!options) return;
-  if (options.dateFormat) dateFormat = options.dateFormat;
-  if (options.ringLength) ringLength = options.ringLength;
-  if (options.logFile) setLogFile(options.logFile);
-  if (options.accessFile) setAccessFile(options.accessFile);
-  if (options.clientFile) setClientFile(options.clientFile);
-  if (options.inspect) inspectOptions = { ...inspectOptions, ...options.inspect };
+function configure(userOptions) {
+  if (!userOptions) return;
+  if (userOptions.dateFormat) options.dateFormat = options.dateFormat;
+  if (userOptions.ringLength) options.ringLength = options.ringLength;
+  if (userOptions.logFile) setLogFile(options.logFile);
+  if (userOptions.accessFile) setAccessFile(options.accessFile);
+  if (userOptions.clientFile) setClientFile(options.clientFile);
+  if (userOptions.inspect) inspectOptions = { ...inspectOptions, ...userOptions.inspect };
   logger = new Console({
     stdout: process.stdout,
     stderr: process.stderr,
     ignoreErrors: true,
-    // groupIndentation: 2,
     inspectOptions,
   });
 }
@@ -164,9 +174,19 @@ function header() {
   process.title = node.name;
   log('info', node.name, 'version', node.version);
   log('info', 'User:', os.userInfo().username, 'Platform:', process.platform, 'Arch:', process.arch, 'Node:', process.version);
-  if (logFile && logFileOK) print(tags.state, 'Application log:', path.resolve(logFile));
-  if (accessFile && accessFileOK) print(tags.state, 'Access log:', path.resolve(logFile));
-  if (clientFile && clientFileOK) print(tags.state, 'Client log:', path.resolve(logFile));
+  if (options.logFile && streams.logFile) print(tags.state, 'Application log:', path.resolve(options.logFile));
+  if (options.accessFile && streams.accessFile) print(tags.state, 'Access log:', path.resolve(options.logFile));
+  if (options.clientFile && streams.clientFile) print(tags.state, 'Client log:', path.resolve(options.logFile));
+}
+
+function headerJson() {
+  const f = './package.json';
+  if (!fs.existsSync(f)) return;
+  const node = JSON.parse(fs.readFileSync(f).toString());
+  process.title = node.name;
+  log('info', { application: node.name, version: node.version });
+  log('info', { user: os.userInfo().username, platform: process.platform, arch: process.arch, node: process.version });
+  if (options.logFile || options.accessFile || options.clientFile) print(tags.state, { log: path.resolve(options.logFile || ''), access: path.resolve(options.accessFile || ''), client: path.resolve(options.clientFile || '') });
 }
 
 function test() {
@@ -187,23 +207,22 @@ function test() {
   log('fatal', 'test fatal');
 }
 
-try {
-  if (require.main === module) test();
-} catch {
-  //
-}
+exports.ring = ring; // local ring buffer
+exports.header = header; // print basic header
+exports.headerJson = headerJson; // print basic header in json format
 
-// local ring buffer
-exports.ring = ring;
-// config items
+// options setters
 exports.ringLength = setRingLength;
 exports.dateFormat = setDateFormat;
-// simple replacement for logger.log
-exports.console = print;
-// log with timing
-exports.timed = timed;
-// simple logging to application log
-exports.logFile = setLogFile;
+exports.logFile = setLogFile; // simple logging to application log
+exports.accessFile = setAccessFile;
+exports.clientFile = setClientFile;
+exports.configure = configure; // configure log object
+exports.options = options;
+
+// actual log methods
+exports.console = print; // simple replacement for logger.log
+exports.timed = timed; // log with timing
 exports.blank = (...message) => log(...message);
 exports.info = (...message) => log('info', ...message);
 exports.state = (...message) => log('state', ...message);
@@ -211,13 +230,7 @@ exports.data = (...message) => log('data', ...message);
 exports.warn = (...message) => log('warn', ...message);
 exports.error = (...message) => log('error', ...message);
 exports.fatal = (...message) => log('fatal', ...message);
-// simple logging to access file
-exports.accessFile = setAccessFile;
-exports.access = (...message) => access(...message);
-// simple logging to client file
-exports.clientFile = setClientFile;
-exports.client = (...message) => client(...message);
-// configure log object
-exports.configure = configure;
-// print basic header
-exports.header = header;
+exports.verbose = (...message) => log('verbose', ...message);
+exports.debug = (...message) => log('debug', ...message);
+exports.access = (...message) => access(...message); // simple logging to access file
+exports.client = (...message) => client(...message); // simple logging to client file
