@@ -1,5 +1,6 @@
 const fs = require('fs');
-const log = require('../dist/pilogger.js');
+// const log = require('../dist/pilogger.js');
+const log = require('./pilogger.js');
 
 console.log(log.options);
 

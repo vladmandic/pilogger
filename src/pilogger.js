@@ -42,7 +42,7 @@ const tags = {
 };
 
 let inspectOptions = { // options passed to nodejs console constructor
-  showHidden: true,
+  showHidden: false,
   depth: 5,
   colors: true,
   showProxy: true,
@@ -51,7 +51,7 @@ let inspectOptions = { // options passed to nodejs console constructor
   breakLength: 200,
   compact: 64,
   sorted: false,
-  getters: true,
+  getters: false,
 };
 
 let logger = new Console({

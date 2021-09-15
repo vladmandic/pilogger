@@ -1782,7 +1782,7 @@ var tags = {
   debug: ctx.bgGray.redBright("DEBUG:")
 };
 var inspectOptions = {
-  showHidden: true,
+  showHidden: false,
   depth: 5,
   colors: true,
   showProxy: true,
@@ -1791,7 +1791,7 @@ var inspectOptions = {
   breakLength: 200,
   compact: 64,
   sorted: false,
-  getters: true
+  getters: false
 };
 var logger = new Console({
   stdout: process.stdout,
