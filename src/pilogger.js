@@ -35,6 +35,7 @@ const tags = {
   data: ctx.green('DATA: '),
   error: ctx.red('ERROR:'),
   fatal: ctx.bold.red('FATAL:'),
+  assert: ctx.italic.bold.red('ASSERT:'),
   timed: ctx.magentaBright('TIMED:'),
   state: ctx.magenta('STATE:'),
   verbose: ctx.bgGray.yellowBright('VERB: '),
@@ -114,6 +115,10 @@ function setClientFile(file) {
     print(tags.error, 'Cannot open application log', `${options.logFile}: ${e.code}`);
     streams.clientFile = false;
   });
+}
+
+async function assert(res, exp, ...messages) {
+  if (res !== exp) log('assert', ...messages, { res, exp });
 }
 
 async function timed(t0, ...messages) {
@@ -223,6 +228,7 @@ exports.options = options;
 // actual log methods
 exports.console = print; // simple replacement for logger.log
 exports.timed = timed; // log with timing
+exports.assert = assert; // log if assertion failed
 exports.blank = (...message) => log(...message);
 exports.info = (...message) => log('info', ...message);
 exports.state = (...message) => log('state', ...message);

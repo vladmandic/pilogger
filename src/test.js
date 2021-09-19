@@ -30,3 +30,7 @@ log.client('client');
 
 log.verbose('verbose');
 log.debug('debug');
+
+log.assert(1, 1, 'assert pass');
+// @ts-ignore
+log.assert(1, 0, 'assert failed');
