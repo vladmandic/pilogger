@@ -13,6 +13,7 @@ const options = {
   dateFormat: 'YYYY-MM-DD HH:mm:ss',
   ringLength: 100,
   console: true,
+  timeStamp: true,
   // logFile: null,
   // accessFile: null,
   // clientFile: null,
@@ -81,7 +82,10 @@ function combineMessages(...messages) {
 
 function print(...messages) {
   const time = dayjs(Date.now()).format(options.dateFormat);
-  if (options.console) logger.log(time, ...messages);
+  if (options.console) {
+    if (options.timeStamp) logger.log(time, ...messages);
+    else logger.log(...messages);
+  }
 }
 
 function setLogFile(file) {
@@ -229,7 +233,7 @@ exports.options = options;
 exports.console = print; // simple replacement for logger.log
 exports.timed = timed; // log with timing
 exports.assert = assert; // log if assertion failed
-exports.blank = (...message) => log(...message);
+exports.blank = (...message) => log('', ...message);
 exports.info = (...message) => log('info', ...message);
 exports.state = (...message) => log('state', ...message);
 exports.data = (...message) => log('data', ...message);

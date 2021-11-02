@@ -1,7 +1,4 @@
-var __require = typeof require !== "undefined" ? require : (x) => {
-  throw new Error('Dynamic require of "' + x + '" is not supported');
-};
-var __commonJS = (cb, mod) => function __require2() {
+var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 
@@ -1761,7 +1758,8 @@ var ring = [];
 var options = {
   dateFormat: "YYYY-MM-DD HH:mm:ss",
   ringLength: 100,
-  console: true
+  console: true,
+  timeStamp: true
 };
 var streams = {
   logFile: false,
@@ -1816,8 +1814,12 @@ function combineMessages(...messages) {
 }
 function print(...messages) {
   const time = dayjs(Date.now()).format(options.dateFormat);
-  if (options.console)
-    logger.log(time, ...messages);
+  if (options.console) {
+    if (options.timeStamp)
+      logger.log(time, ...messages);
+    else
+      logger.log(...messages);
+  }
 }
 function setLogFile(file) {
   if (typeof file !== "string")
@@ -1964,7 +1966,7 @@ exports.options = options;
 exports.console = print;
 exports.timed = timed;
 exports.assert = assert;
-exports.blank = (...message) => log(...message);
+exports.blank = (...message) => log("", ...message);
 exports.info = (...message) => log("info", ...message);
 exports.state = (...message) => log("state", ...message);
 exports.data = (...message) => log("data", ...message);
