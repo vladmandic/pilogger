@@ -209,12 +209,12 @@ export function headerJson() {
 }
 
 // actual log methods
-export const blank = (...message: string[]) => log('blank', ...message);
-export const info = (...message: string[]) => log('info', ...message);
-export const state = (...message: string[]) => log('state', ...message);
-export const data = (...message: string[]) => log('data', ...message);
-export const warn = (...message: string[]) => log('warn', ...message);
-export const error = (...message: string[]) => log('error', ...message);
-export const fatal = (...message: string[]) => log('fatal', ...message);
-export const verbose = (...message: string[]) => log('verbose', ...message);
-export const debug = (...message: string[]) => log('debug', ...message);
+export const blank = (...message: any[]) => log('blank', ...message);
+export const info = (...message: any[]) => log('info', ...message);
+export const state = (...message: any[]) => log('state', ...message);
+export const data = (...message: any[]) => log('data', ...message);
+export const warn = (...message: any[]) => log('warn', ...message);
+export const error = (...message: any[]) => log('error', ...message);
+export const fatal = (...message: any[]) => log('fatal', ...message);
+export const verbose = (...message: any[]) => log('verbose', ...message);
+export const debug = (...message: any[]) => log('debug', ...message);
