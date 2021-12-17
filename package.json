@@ -1,13 +1,13 @@
 {
   "name": "@vladmandic/pilogger",
-  "version": "0.3.5",
+  "version": "0.4.1",
   "description": "Simple Logger for NodeJS",
   "main": "dist/pilogger.js",
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "esbuild --outdir=dist --target=es2018 --platform=node --format=cjs --color=true --bundle src/pilogger.js",
+    "build": "tsc && esbuild --outdir=dist --target=es2018 --platform=node --format=cjs --color=true --bundle src/pilogger.ts",
     "test": "node ./src/test.js"
   },
   "repository": {
@@ -27,8 +27,11 @@
   },
   "homepage": "https://github.com/vladmandic/pilogger#readme",
   "devDependencies": {
+    "@types/node": "^17.0.0",
     "chalk": "^5.0.0",
     "dayjs": "^1.10.7",
-    "esbuild": "^0.14.3"
+    "esbuild": "^0.14.3",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
   }
 }
