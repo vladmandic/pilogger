@@ -6,28 +6,32 @@ var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __commonJS = (cb, mod) => function __require() {
-  return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
-  __markAsModule(target);
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
-var __reExport = (target, module2, desc) => {
+var __reExport = (target, module2, copyDefault, desc) => {
   if (module2 && typeof module2 === "object" || typeof module2 === "function") {
     for (let key of __getOwnPropNames(module2))
-      if (!__hasOwnProp.call(target, key) && key !== "default")
+      if (!__hasOwnProp.call(target, key) && (copyDefault || key !== "default"))
         __defProp(target, key, { get: () => module2[key], enumerable: !(desc = __getOwnPropDesc(module2, key)) || desc.enumerable });
   }
   return target;
 };
-var __toModule = (module2) => {
-  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", module2 && module2.__esModule && "default" in module2 ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
+var __toESM = (module2, isNodeMode) => {
+  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", !isNodeMode && module2 && module2.__esModule ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
 };
+var __toCommonJS = /* @__PURE__ */ ((cache) => {
+  return (module2, temp) => {
+    return cache && cache.get(module2) || (temp = __reExport(__markAsModule({}), module2, 1), cache && cache.set(module2, temp), temp);
+  };
+})(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
 
-// node_modules/.pnpm/dayjs@1.10.7/node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.10.8/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/.pnpm/dayjs@1.10.7/node_modules/dayjs/dayjs.min.js"(exports, module2) {
+  "node_modules/.pnpm/dayjs@1.10.8/node_modules/dayjs/dayjs.min.js"(exports, module2) {
     !function(t, e) {
       typeof exports == "object" && typeof module2 != "undefined" ? module2.exports = e() : typeof define == "function" && define.amd ? define(e) : (t = typeof globalThis != "undefined" ? globalThis : t || self).dayjs = e();
     }(exports, function() {
@@ -231,7 +235,8 @@ var require_dayjs_min = __commonJS({
 });
 
 // src/pilogger.ts
-__export(exports, {
+var pilogger_exports = {};
+__export(pilogger_exports, {
   access: () => access,
   accessFile: () => accessFile,
   assert: () => assert,
@@ -258,16 +263,16 @@ __export(exports, {
   verbose: () => verbose,
   warn: () => warn
 });
-var os2 = __toModule(require("os"));
-var fs = __toModule(require("fs"));
-var path = __toModule(require("path"));
-var import_dayjs = __toModule(require_dayjs_min());
+var os2 = __toESM(require("os"));
+var fs = __toESM(require("fs"));
+var path = __toESM(require("path"));
+var import_dayjs = __toESM(require_dayjs_min());
 
 // node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
-var wrapAnsi16 = (offset = 0) => (code) => `[${code + offset}m`;
-var wrapAnsi256 = (offset = 0) => (code) => `[${38 + offset};5;${code}m`;
-var wrapAnsi16m = (offset = 0) => (red, green, blue) => `[${38 + offset};2;${red};${green};${blue}m`;
+var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
+var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
+var wrapAnsi16m = (offset = 0) => (red, green, blue) => `\x1B[${38 + offset};2;${red};${green};${blue}m`;
 function assembleStyles() {
   const codes = /* @__PURE__ */ new Map();
   const styles2 = {
@@ -326,8 +331,8 @@ function assembleStyles() {
   for (const [groupName, group] of Object.entries(styles2)) {
     for (const [styleName, style] of Object.entries(group)) {
       styles2[styleName] = {
-        open: `[${style[0]}m`,
-        close: `[${style[1]}m`
+        open: `\x1B[${style[0]}m`,
+        close: `\x1B[${style[1]}m`
       };
       group[styleName] = styles2[styleName];
       codes.set(style[0], style[1]);
@@ -341,8 +346,8 @@ function assembleStyles() {
     value: codes,
     enumerable: false
   });
-  styles2.color.close = "[39m";
-  styles2.bgColor.close = "[49m";
+  styles2.color.close = "\x1B[39m";
+  styles2.bgColor.close = "\x1B[49m";
   styles2.color.ansi = wrapAnsi16();
   styles2.color.ansi256 = wrapAnsi256();
   styles2.color.ansi16m = wrapAnsi16m();
@@ -437,9 +442,9 @@ var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
 // node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/vendor/supports-color/index.js
-var import_node_process = __toModule(require("process"));
-var import_node_os = __toModule(require("os"));
-var import_node_tty = __toModule(require("tty"));
+var import_node_process = __toESM(require("process"), 1);
+var import_node_os = __toESM(require("os"), 1);
+var import_node_tty = __toESM(require("tty"), 1);
 function hasFlag(flag, argv = import_node_process.default.argv) {
   const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
   const position = argv.indexOf(prefix + flag);
@@ -595,7 +600,7 @@ var levelMapping = [
   "ansi256",
   "ansi16m"
 ];
-var styles = Object.create(null);
+var styles = /* @__PURE__ */ Object.create(null);
 var applyOptions = (object, options2 = {}) => {
   if (options2.level && !(Number.isInteger(options2.level) && options2.level >= 0 && options2.level <= 3)) {
     throw new Error("The `level` option should be an integer from 0 to 3");
@@ -719,7 +724,7 @@ var applyStyle = (self2, string) => {
     return string;
   }
   const { openAll, closeAll } = styler;
-  if (string.includes("")) {
+  if (string.includes("\x1B")) {
     while (styler !== void 0) {
       string = stringReplaceAll(string, styler.close, styler.open);
       styler = styler.parent;
@@ -736,7 +741,7 @@ var chalk = createChalk();
 var chalkStderr = createChalk({ level: stderrColor ? stderrColor.level : 0 });
 
 // src/pilogger.ts
-var import_console = __toModule(require("console"));
+var import_console = require("console");
 var chalk2 = new Chalk({ level: 2 });
 var ring = [];
 var options = {
@@ -949,6 +954,7 @@ var error = (...message) => log("error", ...message);
 var fatal = (...message) => log("fatal", ...message);
 var verbose = (...message) => log("verbose", ...message);
 var debug = (...message) => log("debug", ...message);
+module.exports = __toCommonJS(pilogger_exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   access,
