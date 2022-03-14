@@ -25,7 +25,7 @@ export declare type Streams = {
     accessStream: fs.WriteStream | undefined;
     clientStream: fs.WriteStream | undefined;
 };
-export declare type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug';
+export declare type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug' | 'console';
 export declare const tags: {
     blank: string;
     continue: string;
@@ -39,6 +39,7 @@ export declare const tags: {
     state: string;
     verbose: string;
     debug: string;
+    console: string;
 };
 export declare function dateFormat(dt: string): void;
 export declare function ringLength(): void;
@@ -62,4 +63,5 @@ export declare const error: (...message: any[]) => Promise<void>;
 export declare const fatal: (...message: any[]) => Promise<void>;
 export declare const verbose: (...message: any[]) => Promise<void>;
 export declare const debug: (...message: any[]) => Promise<void>;
+export declare const console: (...message: any[]) => Promise<void>;
 //# sourceMappingURL=pilogger.d.ts.map

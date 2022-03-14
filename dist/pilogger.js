@@ -244,6 +244,7 @@ __export(pilogger_exports, {
   client: () => client,
   clientFile: () => clientFile,
   configure: () => configure,
+  console: () => console,
   data: () => data,
   dateFormat: () => dateFormat,
   debug: () => debug,
@@ -268,7 +269,7 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_dayjs = __toESM(require_dayjs_min());
 
-// node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/vendor/ansi-styles/index.js
+// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
 var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
 var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
@@ -441,7 +442,7 @@ function assembleStyles() {
 var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
-// node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/vendor/supports-color/index.js
+// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/vendor/supports-color/index.js
 var import_node_process = __toESM(require("process"), 1);
 var import_node_os = __toESM(require("os"), 1);
 var import_node_tty = __toESM(require("tty"), 1);
@@ -559,7 +560,7 @@ var supportsColor = {
 };
 var supports_color_default = supportsColor;
 
-// node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/utilities.js
+// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/utilities.js
 function stringReplaceAll(string, substring, replacer) {
   let index = string.indexOf(substring);
   if (index === -1) {
@@ -589,7 +590,7 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
   return returnValue;
 }
 
-// node_modules/.pnpm/chalk@5.0.0/node_modules/chalk/source/index.js
+// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/index.js
 var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
 var GENERATOR = Symbol("GENERATOR");
 var STYLER = Symbol("STYLER");
@@ -770,7 +771,8 @@ var tags = {
   timed: chalk2.magentaBright("TIMED:"),
   state: chalk2.magenta("STATE:"),
   verbose: chalk2.bgGray.yellowBright("VERB: "),
-  debug: chalk2.bgGray.redBright("DEBUG:")
+  debug: chalk2.bgGray.redBright("DEBUG:"),
+  console: chalk2.gray("CONSOLE:")
 };
 var inspectOptions = {
   showHidden: false,
@@ -954,6 +956,7 @@ var error = (...message) => log("error", ...message);
 var fatal = (...message) => log("fatal", ...message);
 var verbose = (...message) => log("verbose", ...message);
 var debug = (...message) => log("debug", ...message);
+var console = (...message) => log("console", ...message);
 module.exports = __toCommonJS(pilogger_exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
@@ -964,6 +967,7 @@ module.exports = __toCommonJS(pilogger_exports);
   client,
   clientFile,
   configure,
+  console,
   data,
   dateFormat,
   debug,

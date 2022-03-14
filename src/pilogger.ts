@@ -37,7 +37,7 @@ const streams: Streams = {
   clientStream: undefined,
 }
 
-export type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug';
+export type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug' | 'console';
 export const tags = {
   blank: '',
   continue: ':     ',
@@ -50,7 +50,8 @@ export const tags = {
   timed: chalk.magentaBright('TIMED:'),
   state: chalk.magenta('STATE:'),
   verbose: chalk.bgGray.yellowBright('VERB: '),
-  debug: chalk.bgGray.redBright('DEBUG:')
+  debug: chalk.bgGray.redBright('DEBUG:'),
+  console: chalk.gray('CONSOLE:')
 };
 
 let inspectOptions = { // options passed to nodejs console constructor
@@ -218,3 +219,4 @@ export const error = (...message: any[]) => log('error', ...message);
 export const fatal = (...message: any[]) => log('fatal', ...message);
 export const verbose = (...message: any[]) => log('verbose', ...message);
 export const debug = (...message: any[]) => log('debug', ...message);
+export const console = (...message: any[]) => log('console', ...message);
