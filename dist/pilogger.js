@@ -4,7 +4,6 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
@@ -12,26 +11,20 @@ var __export = (target, all) => {
   for (var name in all)
     __defProp(target, name, { get: all[name], enumerable: true });
 };
-var __reExport = (target, module2, copyDefault, desc) => {
-  if (module2 && typeof module2 === "object" || typeof module2 === "function") {
-    for (let key of __getOwnPropNames(module2))
-      if (!__hasOwnProp.call(target, key) && (copyDefault || key !== "default"))
-        __defProp(target, key, { get: () => module2[key], enumerable: !(desc = __getOwnPropDesc(module2, key)) || desc.enumerable });
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
-  return target;
+  return to;
 };
-var __toESM = (module2, isNodeMode) => {
-  return __reExport(__markAsModule(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", !isNodeMode && module2 && module2.__esModule ? { get: () => module2.default, enumerable: true } : { value: module2, enumerable: true })), module2);
-};
-var __toCommonJS = /* @__PURE__ */ ((cache) => {
-  return (module2, temp) => {
-    return cache && cache.get(module2) || (temp = __reExport(__markAsModule({}), module2, 1), cache && cache.set(module2, temp), temp);
-  };
-})(typeof WeakMap !== "undefined" ? /* @__PURE__ */ new WeakMap() : 0);
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// node_modules/.pnpm/dayjs@1.10.8/node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.11.2/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/.pnpm/dayjs@1.10.8/node_modules/dayjs/dayjs.min.js"(exports, module2) {
+  "node_modules/.pnpm/dayjs@1.11.2/node_modules/dayjs/dayjs.min.js"(exports, module2) {
     !function(t, e) {
       typeof exports == "object" && typeof module2 != "undefined" ? module2.exports = e() : typeof define == "function" && define.amd ? define(e) : (t = typeof globalThis != "undefined" ? globalThis : t || self).dayjs = e();
     }(exports, function() {
@@ -53,21 +46,25 @@ var require_dayjs_min = __commonJS({
         return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: h }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
       }, u: function(t2) {
         return t2 === void 0;
-      } }, D = "en", v = {};
-      v[D] = M;
+      } }, v = "en", D = {};
+      D[v] = M;
       var p = function(t2) {
         return t2 instanceof _;
-      }, S = function(t2, e2, n2) {
-        var r2;
-        if (!t2)
-          return D;
-        if (typeof t2 == "string")
-          v[t2] && (r2 = t2), e2 && (v[t2] = e2, r2 = t2);
-        else {
-          var i2 = t2.name;
-          v[i2] = t2, r2 = i2;
+      }, S = function t2(e2, n2, r2) {
+        var i2;
+        if (!e2)
+          return v;
+        if (typeof e2 == "string") {
+          var s2 = e2.toLowerCase();
+          D[s2] && (i2 = s2), n2 && (D[s2] = n2, i2 = s2);
+          var u2 = e2.split("-");
+          if (!i2 && u2.length > 1)
+            return t2(u2[0]);
+        } else {
+          var a2 = e2.name;
+          D[a2] = e2, i2 = a2;
         }
-        return !n2 && r2 && (D = r2), r2 || !n2 && D;
+        return !r2 && i2 && (v = i2), i2 || !r2 && v;
       }, w = function(t2, e2) {
         if (p(t2))
           return t2.clone();
@@ -133,8 +130,8 @@ var require_dayjs_min = __commonJS({
             case f:
               return r2 ? $2(1, M3) : $2(0, M3 + 1);
             case o:
-              var D2 = this.$locale().weekStart || 0, v2 = (y2 < D2 ? y2 + 7 : y2) - D2;
-              return $2(r2 ? m3 - v2 : m3 + (6 - v2), M3);
+              var v2 = this.$locale().weekStart || 0, D2 = (y2 < v2 ? y2 + 7 : y2) - v2;
+              return $2(r2 ? m3 - D2 : m3 + (6 - D2), M3);
             case a:
             case d:
               return l2(g2 + "Hours", 0);
@@ -185,7 +182,7 @@ var require_dayjs_min = __commonJS({
           if (!this.isValid())
             return n2.invalidDate || $;
           var r2 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h2 = function(t3, n3, i3, s3) {
-            return t3 && (t3[n3] || t3(e2, r2)) || i3[n3].substr(0, s3);
+            return t3 && (t3[n3] || t3(e2, r2)) || i3[n3].slice(0, s3);
           }, c2 = function(t3) {
             return O.s(s2 % 12 || 12, t3, "0");
           }, d2 = n2.meridiem || function(t3, e3, n3) {
@@ -198,12 +195,12 @@ var require_dayjs_min = __commonJS({
         }, m2.utcOffset = function() {
           return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
         }, m2.diff = function(r2, d2, $2) {
-          var l2, y2 = O.p(d2), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, D2 = O.m(this, M3);
-          return D2 = (l2 = {}, l2[c] = D2 / 12, l2[f] = D2, l2[h] = D2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? D2 : O.a(D2);
+          var l2, y2 = O.p(d2), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, v2 = O.m(this, M3);
+          return v2 = (l2 = {}, l2[c] = v2 / 12, l2[f] = v2, l2[h] = v2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? v2 : O.a(v2);
         }, m2.daysInMonth = function() {
           return this.endOf(f).$D;
         }, m2.$locale = function() {
-          return v[this.$L];
+          return D[this.$L];
         }, m2.locale = function(t2, e2) {
           if (!t2)
             return this.$L;
@@ -220,16 +217,16 @@ var require_dayjs_min = __commonJS({
         }, m2.toString = function() {
           return this.$d.toUTCString();
         }, M2;
-      }(), b = _.prototype;
-      return w.prototype = b, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t2) {
-        b[t2[1]] = function(e2) {
+      }(), T = _.prototype;
+      return w.prototype = T, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t2) {
+        T[t2[1]] = function(e2) {
           return this.$g(e2, t2[0], t2[1]);
         };
       }), w.extend = function(t2, e2) {
         return t2.$i || (t2(e2, _, w), t2.$i = true), w;
       }, w.locale = S, w.isDayjs = p, w.unix = function(t2) {
         return w(1e3 * t2);
-      }, w.en = v[D], w.Ls = v, w.p = {}, w;
+      }, w.en = D[v], w.Ls = D, w.p = {}, w;
     });
   }
 });
@@ -264,6 +261,7 @@ __export(pilogger_exports, {
   verbose: () => verbose,
   warn: () => warn
 });
+module.exports = __toCommonJS(pilogger_exports);
 var os2 = __toESM(require("os"));
 var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
@@ -957,7 +955,6 @@ var fatal = (...message) => log("fatal", ...message);
 var verbose = (...message) => log("verbose", ...message);
 var debug = (...message) => log("debug", ...message);
 var console = (...message) => log("console", ...message);
-module.exports = __toCommonJS(pilogger_exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   access,
