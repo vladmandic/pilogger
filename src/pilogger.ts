@@ -82,10 +82,20 @@ export function ringLength() {
   options.ringLength = 100;
 }
 
+function stringify(message: any) {
+  let str = '';
+  try {
+    str = JSON.stringify(message);
+  } catch {
+    //
+  }
+  return str;
+}
+
 function combineMessages(...messages: string[]) {
   let msg = '';
   for (const message of messages) {
-    msg += typeof message === 'object' ? JSON.stringify(message) : message;
+    msg += typeof message === 'object' ? stringify(message) : message;
     msg += ' ';
   }
   return msg;
