@@ -41,14 +41,12 @@ export declare const tags: {
     debug: string;
     console: string;
 };
-export declare function dateFormat(dt: string): void;
-export declare function ringLength(): void;
 export declare function print(...messages: any[]): void;
 export declare function logFile(file: string): void;
 export declare function accessFile(file: string): void;
 export declare function clientFile(file: string): void;
-export declare function assert(res: any, exp: any, ...messages: string[]): Promise<void>;
 export declare function timed(t0: bigint, ...messages: string[]): Promise<void>;
+export declare function assert(res: any, exp: any, ...messages: string[]): Promise<void>;
 export declare function access(...messages: any[]): Promise<void>;
 export declare function client(...messages: any[]): Promise<void>;
 export declare function configure(userOptions: Partial<Options>): void;

@@ -25,9 +25,16 @@ export const options: Options = {
   ringLength: 100,
   console: true,
   timeStamp: true,
-}
+};
 
-export type Streams = { logFile: boolean, accessFile: boolean, clientFile: boolean, logStream: fs.WriteStream | undefined, accessStream: fs.WriteStream | undefined, clientStream: fs.WriteStream | undefined };
+export type Streams = {
+  logFile: boolean,
+  accessFile: boolean,
+  clientFile: boolean,
+  logStream: fs.WriteStream | undefined,
+  accessStream: fs.WriteStream | undefined,
+  clientStream: fs.WriteStream | undefined,
+};
 const streams: Streams = {
   logFile: false,
   accessFile: false,
@@ -35,7 +42,7 @@ const streams: Streams = {
   logStream: undefined,
   accessStream: undefined,
   clientStream: undefined,
-}
+};
 
 export type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug' | 'console';
 export const tags = {
@@ -51,7 +58,7 @@ export const tags = {
   state: chalk.magenta('STATE:'),
   verbose: chalk.bgGray.yellowBright('VERB: '),
   debug: chalk.bgGray.redBright('DEBUG:'),
-  console: chalk.gray('CONSOLE:')
+  console: chalk.gray('CONSOLE:'),
 };
 
 let inspectOptions = { // options passed to nodejs console constructor
@@ -74,21 +81,9 @@ let logger = new Console({
   inspectOptions,
 });
 
-export function dateFormat(dt: string) {
-  options.dateFormat = dt;
-}
-
-export function ringLength() {
-  options.ringLength = 100;
-}
-
 function stringify(message: any) {
   let str = '';
-  try {
-    str = JSON.stringify(message);
-  } catch {
-    //
-  }
+  try { str = JSON.stringify(message); } catch { /**/ }
   return str;
 }
 
@@ -114,10 +109,12 @@ export function logFile(file: string) {
   options.logFile = file;
   streams.logFile = true;
   streams.logStream = fs.createWriteStream(path.resolve(options.logFile || ''), { flags: 'a' });
-  if (streams.logStream) streams.logStream.on('error', (e) => {
-    print(tags.error, 'Cannot open application log', options.logFile, e);
-    streams.logFile = false;
-  });
+  if (streams.logStream) {
+    streams.logStream.on('error', (e) => {
+      print(tags.error, 'Cannot open application log', options.logFile, e);
+      streams.logFile = false;
+    });
+  }
 }
 
 export function accessFile(file: string) {
@@ -125,10 +122,12 @@ export function accessFile(file: string) {
   options.accessFile = file;
   streams.accessFile = true;
   streams.accessStream = fs.createWriteStream(path.resolve(options.accessFile), { flags: 'a' });
-  if (streams.accessStream) streams.accessStream.on('error', (e) => {
-    print(tags.error, 'Cannot open application log', options.accessFile, e);
-    streams.accessFile = false;
-  });
+  if (streams.accessStream) {
+    streams.accessStream.on('error', (e) => {
+      print(tags.error, 'Cannot open application log', options.accessFile, e);
+      streams.accessFile = false;
+    });
+  }
 }
 
 export function clientFile(file: string) {
@@ -136,14 +135,12 @@ export function clientFile(file: string) {
   options.clientFile = file;
   streams.clientFile = true;
   streams.clientStream = fs.createWriteStream(path.resolve(options.clientFile), { flags: 'a' });
-  if (streams.clientStream) streams.clientStream.on('error', (e) => {
-    print(tags.error, 'Cannot open application log', options.clientFile, e);
-    streams.clientFile = false;
-  });
-}
-
-export async function assert(res: any, exp: any, ...messages: string[]) {
-  if (res !== exp) log('assert', ...messages, { res, exp });
+  if (streams.clientStream) {
+    streams.clientStream.on('error', (e) => {
+      print(tags.error, 'Cannot open application log', options.clientFile, e);
+      streams.clientFile = false;
+    });
+  }
 }
 
 export async function timed(t0: bigint, ...messages: string[]) {
@@ -153,9 +150,7 @@ export async function timed(t0: bigint, ...messages: string[]) {
   }
   const t1 = process.hrtime.bigint();
   let elapsed = 0;
-  try {
-    elapsed = parseInt((t1 - t0).toString());
-  } catch { /**/ }
+  try { elapsed = parseInt((t1 - t0).toString()); } catch { /**/ }
   elapsed = Math.round(elapsed / 1000000);
   const time = dayjs(Date.now()).format(options.dateFormat);
   if (options.console) logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
@@ -169,6 +164,10 @@ async function log(tag: Tags, ...messages: any[]) {
   if (streams.logFile && streams.logStream) streams.logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}\n`);
   ring.push({ tag, time, msg: combineMessages(...messages) });
   if (ring.length > options.ringLength) ring.shift();
+}
+
+export async function assert(res: any, exp: any, ...messages: string[]) {
+  if (res !== exp) log('assert', ...messages, { res, exp });
 }
 
 export async function access(...messages: any[]) {

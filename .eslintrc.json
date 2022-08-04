@@ -1,19 +1,36 @@
 {
   "globals": {},
   "env": {
-      "browser": false,
+      "browser": true,
       "commonjs": true,
-      "es6": true,
       "node": true,
-      "es2020": true
+      "es2022": true
   },
-  "parserOptions": { "ecmaVersion": 2020 },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "json",
+    "html"
+  ],
   "extends": [
-      "eslint:recommended",
-      "airbnb-base"
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:json/recommended-with-comments",
+    "plugin:import/typescript"
   ],
   "rules": {
+    "max-len": [1, 275, 3],
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/no-extraneous-dependencies": "off",
     "no-param-reassign": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "object-curly-newline": "off",
+    "radix": "off"
   }
 }

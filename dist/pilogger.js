@@ -20,12 +20,15 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target, mod));
+var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+  mod
+));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// node_modules/.pnpm/dayjs@1.11.3/node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.11.4/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/.pnpm/dayjs@1.11.3/node_modules/dayjs/dayjs.min.js"(exports, module2) {
+  "node_modules/.pnpm/dayjs@1.11.4/node_modules/dayjs/dayjs.min.js"(exports, module2) {
     !function(t, e) {
       "object" == typeof exports && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
     }(exports, function() {
@@ -244,7 +247,6 @@ __export(pilogger_exports, {
   configure: () => configure,
   console: () => console,
   data: () => data,
-  dateFormat: () => dateFormat,
   debug: () => debug,
   error: () => error,
   fatal: () => fatal,
@@ -255,7 +257,6 @@ __export(pilogger_exports, {
   options: () => options,
   print: () => print,
   ring: () => ring,
-  ringLength: () => ringLength,
   state: () => state,
   tags: () => tags,
   timed: () => timed,
@@ -791,12 +792,6 @@ var logger = new import_console.Console({
   ignoreErrors: true,
   inspectOptions
 });
-function dateFormat(dt) {
-  options.dateFormat = dt;
-}
-function ringLength() {
-  options.ringLength = 100;
-}
 function stringify(message) {
   let str = "";
   try {
@@ -828,11 +823,12 @@ function logFile(file) {
   options.logFile = file;
   streams.logFile = true;
   streams.logStream = fs.createWriteStream(path.resolve(options.logFile || ""), { flags: "a" });
-  if (streams.logStream)
+  if (streams.logStream) {
     streams.logStream.on("error", (e) => {
       print(tags.error, "Cannot open application log", options.logFile, e);
       streams.logFile = false;
     });
+  }
 }
 function accessFile(file) {
   if (typeof file !== "string")
@@ -840,11 +836,12 @@ function accessFile(file) {
   options.accessFile = file;
   streams.accessFile = true;
   streams.accessStream = fs.createWriteStream(path.resolve(options.accessFile), { flags: "a" });
-  if (streams.accessStream)
+  if (streams.accessStream) {
     streams.accessStream.on("error", (e) => {
       print(tags.error, "Cannot open application log", options.accessFile, e);
       streams.accessFile = false;
     });
+  }
 }
 function clientFile(file) {
   if (typeof file !== "string")
@@ -852,15 +849,12 @@ function clientFile(file) {
   options.clientFile = file;
   streams.clientFile = true;
   streams.clientStream = fs.createWriteStream(path.resolve(options.clientFile), { flags: "a" });
-  if (streams.clientStream)
+  if (streams.clientStream) {
     streams.clientStream.on("error", (e) => {
       print(tags.error, "Cannot open application log", options.clientFile, e);
       streams.clientFile = false;
     });
-}
-async function assert(res, exp, ...messages) {
-  if (res !== exp)
-    log("assert", ...messages, { res, exp });
+  }
 }
 async function timed(t0, ...messages) {
   if (arguments.length < 2) {
@@ -893,6 +887,10 @@ async function log(tag, ...messages) {
   ring.push({ tag, time, msg: combineMessages(...messages) });
   if (ring.length > options.ringLength)
     ring.shift();
+}
+async function assert(res, exp, ...messages) {
+  if (res !== exp)
+    log("assert", ...messages, { res, exp });
 }
 async function access(...messages) {
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
@@ -975,7 +973,6 @@ var console = (...message) => log("console", ...message);
   configure,
   console,
   data,
-  dateFormat,
   debug,
   error,
   fatal,
@@ -986,7 +983,6 @@ var console = (...message) => log("console", ...message);
   options,
   print,
   ring,
-  ringLength,
   state,
   tags,
   timed,
