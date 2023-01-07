@@ -1,12 +1,12 @@
 /// <reference types="node" />
 import * as fs from 'fs';
-export declare type Ring = {
+export type Ring = {
     tag: string;
     time: string;
     msg: string;
 };
 export declare const ring: Ring[];
-export declare type Options = {
+export type Options = {
     dateFormat: string;
     ringLength: number;
     console: boolean;
@@ -17,7 +17,7 @@ export declare type Options = {
     inspect?: any;
 };
 export declare const options: Options;
-export declare type Streams = {
+export type Streams = {
     logFile: boolean;
     accessFile: boolean;
     clientFile: boolean;
@@ -25,7 +25,7 @@ export declare type Streams = {
     accessStream: fs.WriteStream | undefined;
     clientStream: fs.WriteStream | undefined;
 };
-export declare type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug' | 'console';
+export type Tags = 'blank' | 'continue' | 'info' | 'warn' | 'data' | 'error' | 'fatal' | 'assert' | 'timed' | 'state' | 'verbose' | 'debug' | 'console';
 export declare const tags: {
     blank: string;
     continue: string;

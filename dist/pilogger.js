@@ -21,22 +21,29 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+  // If the importer is in node compatibility mode or this is not an ESM
+  // file that has been converted to a CommonJS file using a Babel-
+  // compatible transform (i.e. "__esModule" has not been set), then set
+  // "default" to the CommonJS "module.exports" for node compatibility.
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// node_modules/.pnpm/dayjs@1.11.4/node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/.pnpm/dayjs@1.11.4/node_modules/dayjs/dayjs.min.js"(exports, module2) {
+  "node_modules/.pnpm/dayjs@1.11.7/node_modules/dayjs/dayjs.min.js"(exports, module2) {
     !function(t, e) {
       "object" == typeof exports && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
     }(exports, function() {
       "use strict";
-      var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h = "quarter", c = "year", d = "date", $ = "Invalid Date", l = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_") }, m = function(t2, e2, n2) {
+      var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h = "quarter", c = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t2) {
+        var e2 = ["th", "st", "nd", "rd"], n2 = t2 % 100;
+        return "[" + t2 + (e2[(n2 - 20) % 10] || e2[n2] || e2[0]) + "]";
+      } }, m = function(t2, e2, n2) {
         var r2 = String(t2);
         return !r2 || r2.length >= e2 ? t2 : "" + Array(e2 + 1 - r2.length).join(n2) + t2;
-      }, g = { s: m, z: function(t2) {
+      }, v = { s: m, z: function(t2) {
         var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r2 = Math.floor(n2 / 60), i2 = n2 % 60;
         return (e2 <= 0 ? "+" : "-") + m(r2, 2, "0") + ":" + m(i2, 2, "0");
       }, m: function t2(e2, n2) {
@@ -50,14 +57,14 @@ var require_dayjs_min = __commonJS({
         return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: h }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
       }, u: function(t2) {
         return void 0 === t2;
-      } }, v = "en", D = {};
-      D[v] = M;
+      } }, g = "en", D = {};
+      D[g] = M;
       var p = function(t2) {
         return t2 instanceof _;
       }, S = function t2(e2, n2, r2) {
         var i2;
         if (!e2)
-          return v;
+          return g;
         if ("string" == typeof e2) {
           var s2 = e2.toLowerCase();
           D[s2] && (i2 = s2), n2 && (D[s2] = n2, i2 = s2);
@@ -68,13 +75,13 @@ var require_dayjs_min = __commonJS({
           var a2 = e2.name;
           D[a2] = e2, i2 = a2;
         }
-        return !r2 && i2 && (v = i2), i2 || !r2 && v;
+        return !r2 && i2 && (g = i2), i2 || !r2 && g;
       }, w = function(t2, e2) {
         if (p(t2))
           return t2.clone();
         var n2 = "object" == typeof e2 ? e2 : {};
         return n2.date = t2, n2.args = arguments, new _(n2);
-      }, O = g;
+      }, O = v;
       O.l = S, O.i = p, O.w = function(t2, e2) {
         return w(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
       };
@@ -93,7 +100,7 @@ var require_dayjs_min = __commonJS({
             if (e2 instanceof Date)
               return new Date(e2);
             if ("string" == typeof e2 && !/Z$/i.test(e2)) {
-              var r2 = e2.match(l);
+              var r2 = e2.match($);
               if (r2) {
                 var i2 = r2[2] - 1 || 0, s2 = (r2[7] || "0").substring(0, 3);
                 return n2 ? new Date(Date.UTC(r2[1], i2, r2[3] || 1, r2[4] || 0, r2[5] || 0, r2[6] || 0, s2)) : new Date(r2[1], i2, r2[3] || 1, r2[4] || 0, r2[5] || 0, r2[6] || 0, s2);
@@ -107,7 +114,7 @@ var require_dayjs_min = __commonJS({
         }, m2.$utils = function() {
           return O;
         }, m2.isValid = function() {
-          return !(this.$d.toString() === $);
+          return !(this.$d.toString() === l);
         }, m2.isSame = function(t2, e2) {
           var n2 = w(t2);
           return this.startOf(e2) <= n2 && n2 <= this.endOf(e2);
@@ -122,69 +129,69 @@ var require_dayjs_min = __commonJS({
         }, m2.valueOf = function() {
           return this.$d.getTime();
         }, m2.startOf = function(t2, e2) {
-          var n2 = this, r2 = !!O.u(e2) || e2, h2 = O.p(t2), $2 = function(t3, e3) {
+          var n2 = this, r2 = !!O.u(e2) || e2, h2 = O.p(t2), l2 = function(t3, e3) {
             var i2 = O.w(n2.$u ? Date.UTC(n2.$y, e3, t3) : new Date(n2.$y, e3, t3), n2);
             return r2 ? i2 : i2.endOf(a);
-          }, l2 = function(t3, e3) {
+          }, $2 = function(t3, e3) {
             return O.w(n2.toDate()[t3].apply(n2.toDate("s"), (r2 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
-          }, y2 = this.$W, M3 = this.$M, m3 = this.$D, g2 = "set" + (this.$u ? "UTC" : "");
+          }, y2 = this.$W, M3 = this.$M, m3 = this.$D, v2 = "set" + (this.$u ? "UTC" : "");
           switch (h2) {
             case c:
-              return r2 ? $2(1, 0) : $2(31, 11);
+              return r2 ? l2(1, 0) : l2(31, 11);
             case f:
-              return r2 ? $2(1, M3) : $2(0, M3 + 1);
+              return r2 ? l2(1, M3) : l2(0, M3 + 1);
             case o:
-              var v2 = this.$locale().weekStart || 0, D2 = (y2 < v2 ? y2 + 7 : y2) - v2;
-              return $2(r2 ? m3 - D2 : m3 + (6 - D2), M3);
+              var g2 = this.$locale().weekStart || 0, D2 = (y2 < g2 ? y2 + 7 : y2) - g2;
+              return l2(r2 ? m3 - D2 : m3 + (6 - D2), M3);
             case a:
             case d:
-              return l2(g2 + "Hours", 0);
+              return $2(v2 + "Hours", 0);
             case u:
-              return l2(g2 + "Minutes", 1);
+              return $2(v2 + "Minutes", 1);
             case s:
-              return l2(g2 + "Seconds", 2);
+              return $2(v2 + "Seconds", 2);
             case i:
-              return l2(g2 + "Milliseconds", 3);
+              return $2(v2 + "Milliseconds", 3);
             default:
               return this.clone();
           }
         }, m2.endOf = function(t2) {
           return this.startOf(t2, false);
         }, m2.$set = function(t2, e2) {
-          var n2, o2 = O.p(t2), h2 = "set" + (this.$u ? "UTC" : ""), $2 = (n2 = {}, n2[a] = h2 + "Date", n2[d] = h2 + "Date", n2[f] = h2 + "Month", n2[c] = h2 + "FullYear", n2[u] = h2 + "Hours", n2[s] = h2 + "Minutes", n2[i] = h2 + "Seconds", n2[r] = h2 + "Milliseconds", n2)[o2], l2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
+          var n2, o2 = O.p(t2), h2 = "set" + (this.$u ? "UTC" : ""), l2 = (n2 = {}, n2[a] = h2 + "Date", n2[d] = h2 + "Date", n2[f] = h2 + "Month", n2[c] = h2 + "FullYear", n2[u] = h2 + "Hours", n2[s] = h2 + "Minutes", n2[i] = h2 + "Seconds", n2[r] = h2 + "Milliseconds", n2)[o2], $2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
           if (o2 === f || o2 === c) {
             var y2 = this.clone().set(d, 1);
-            y2.$d[$2](l2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
+            y2.$d[l2]($2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
           } else
-            $2 && this.$d[$2](l2);
+            l2 && this.$d[l2]($2);
           return this.init(), this;
         }, m2.set = function(t2, e2) {
           return this.clone().$set(t2, e2);
         }, m2.get = function(t2) {
           return this[O.p(t2)]();
         }, m2.add = function(r2, h2) {
-          var d2, $2 = this;
+          var d2, l2 = this;
           r2 = Number(r2);
-          var l2 = O.p(h2), y2 = function(t2) {
-            var e2 = w($2);
-            return O.w(e2.date(e2.date() + Math.round(t2 * r2)), $2);
+          var $2 = O.p(h2), y2 = function(t2) {
+            var e2 = w(l2);
+            return O.w(e2.date(e2.date() + Math.round(t2 * r2)), l2);
           };
-          if (l2 === f)
+          if ($2 === f)
             return this.set(f, this.$M + r2);
-          if (l2 === c)
+          if ($2 === c)
             return this.set(c, this.$y + r2);
-          if (l2 === a)
+          if ($2 === a)
             return y2(1);
-          if (l2 === o)
+          if ($2 === o)
             return y2(7);
-          var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[l2] || 1, m3 = this.$d.getTime() + r2 * M3;
+          var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[$2] || 1, m3 = this.$d.getTime() + r2 * M3;
           return O.w(m3, this);
         }, m2.subtract = function(t2, e2) {
           return this.add(-1 * t2, e2);
         }, m2.format = function(t2) {
           var e2 = this, n2 = this.$locale();
           if (!this.isValid())
-            return n2.invalidDate || $;
+            return n2.invalidDate || l;
           var r2 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h2 = function(t3, n3, i3, s3) {
             return t3 && (t3[n3] || t3(e2, r2)) || i3[n3].slice(0, s3);
           }, c2 = function(t3) {
@@ -192,15 +199,15 @@ var require_dayjs_min = __commonJS({
           }, d2 = n2.meridiem || function(t3, e3, n3) {
             var r3 = t3 < 12 ? "AM" : "PM";
             return n3 ? r3.toLowerCase() : r3;
-          }, l2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h2(n2.monthsShort, a2, f2, 3), MMMM: h2(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n2.weekdaysMin, this.$W, o2, 2), ddd: h2(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d2(s2, u2, true), A: d2(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
+          }, $2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h2(n2.monthsShort, a2, f2, 3), MMMM: h2(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n2.weekdaysMin, this.$W, o2, 2), ddd: h2(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d2(s2, u2, true), A: d2(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
           return r2.replace(y, function(t3, e3) {
-            return e3 || l2[t3] || i2.replace(":", "");
+            return e3 || $2[t3] || i2.replace(":", "");
           });
         }, m2.utcOffset = function() {
           return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
-        }, m2.diff = function(r2, d2, $2) {
-          var l2, y2 = O.p(d2), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, v2 = O.m(this, M3);
-          return v2 = (l2 = {}, l2[c] = v2 / 12, l2[f] = v2, l2[h] = v2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? v2 : O.a(v2);
+        }, m2.diff = function(r2, d2, l2) {
+          var $2, y2 = O.p(d2), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, v2 = this - M3, g2 = O.m(this, M3);
+          return g2 = ($2 = {}, $2[c] = g2 / 12, $2[f] = g2, $2[h] = g2 / 3, $2[o] = (v2 - m3) / 6048e5, $2[a] = (v2 - m3) / 864e5, $2[u] = v2 / n, $2[s] = v2 / e, $2[i] = v2 / t, $2)[y2] || v2, l2 ? g2 : O.a(g2);
         }, m2.daysInMonth = function() {
           return this.endOf(f).$D;
         }, m2.$locale = function() {
@@ -230,7 +237,7 @@ var require_dayjs_min = __commonJS({
         return t2.$i || (t2(e2, _, w), t2.$i = true), w;
       }, w.locale = S, w.isDayjs = p, w.unix = function(t2) {
         return w(1e3 * t2);
-      }, w.en = D[v], w.Ls = D, w.p = {}, w;
+      }, w.en = D[g], w.Ls = D, w.p = {}, w;
     });
   }
 });
@@ -269,95 +276,106 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_dayjs = __toESM(require_dayjs_min());
 
-// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/vendor/ansi-styles/index.js
+// node_modules/.pnpm/chalk@5.2.0/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
 var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
 var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
 var wrapAnsi16m = (offset = 0) => (red, green, blue) => `\x1B[${38 + offset};2;${red};${green};${blue}m`;
+var styles = {
+  modifier: {
+    reset: [0, 0],
+    // 21 isn't widely supported and 22 does the same thing
+    bold: [1, 22],
+    dim: [2, 22],
+    italic: [3, 23],
+    underline: [4, 24],
+    overline: [53, 55],
+    inverse: [7, 27],
+    hidden: [8, 28],
+    strikethrough: [9, 29]
+  },
+  color: {
+    black: [30, 39],
+    red: [31, 39],
+    green: [32, 39],
+    yellow: [33, 39],
+    blue: [34, 39],
+    magenta: [35, 39],
+    cyan: [36, 39],
+    white: [37, 39],
+    // Bright color
+    blackBright: [90, 39],
+    gray: [90, 39],
+    // Alias of `blackBright`
+    grey: [90, 39],
+    // Alias of `blackBright`
+    redBright: [91, 39],
+    greenBright: [92, 39],
+    yellowBright: [93, 39],
+    blueBright: [94, 39],
+    magentaBright: [95, 39],
+    cyanBright: [96, 39],
+    whiteBright: [97, 39]
+  },
+  bgColor: {
+    bgBlack: [40, 49],
+    bgRed: [41, 49],
+    bgGreen: [42, 49],
+    bgYellow: [43, 49],
+    bgBlue: [44, 49],
+    bgMagenta: [45, 49],
+    bgCyan: [46, 49],
+    bgWhite: [47, 49],
+    // Bright color
+    bgBlackBright: [100, 49],
+    bgGray: [100, 49],
+    // Alias of `bgBlackBright`
+    bgGrey: [100, 49],
+    // Alias of `bgBlackBright`
+    bgRedBright: [101, 49],
+    bgGreenBright: [102, 49],
+    bgYellowBright: [103, 49],
+    bgBlueBright: [104, 49],
+    bgMagentaBright: [105, 49],
+    bgCyanBright: [106, 49],
+    bgWhiteBright: [107, 49]
+  }
+};
+var modifierNames = Object.keys(styles.modifier);
+var foregroundColorNames = Object.keys(styles.color);
+var backgroundColorNames = Object.keys(styles.bgColor);
+var colorNames = [...foregroundColorNames, ...backgroundColorNames];
 function assembleStyles() {
   const codes = /* @__PURE__ */ new Map();
-  const styles2 = {
-    modifier: {
-      reset: [0, 0],
-      bold: [1, 22],
-      dim: [2, 22],
-      italic: [3, 23],
-      underline: [4, 24],
-      overline: [53, 55],
-      inverse: [7, 27],
-      hidden: [8, 28],
-      strikethrough: [9, 29]
-    },
-    color: {
-      black: [30, 39],
-      red: [31, 39],
-      green: [32, 39],
-      yellow: [33, 39],
-      blue: [34, 39],
-      magenta: [35, 39],
-      cyan: [36, 39],
-      white: [37, 39],
-      blackBright: [90, 39],
-      redBright: [91, 39],
-      greenBright: [92, 39],
-      yellowBright: [93, 39],
-      blueBright: [94, 39],
-      magentaBright: [95, 39],
-      cyanBright: [96, 39],
-      whiteBright: [97, 39]
-    },
-    bgColor: {
-      bgBlack: [40, 49],
-      bgRed: [41, 49],
-      bgGreen: [42, 49],
-      bgYellow: [43, 49],
-      bgBlue: [44, 49],
-      bgMagenta: [45, 49],
-      bgCyan: [46, 49],
-      bgWhite: [47, 49],
-      bgBlackBright: [100, 49],
-      bgRedBright: [101, 49],
-      bgGreenBright: [102, 49],
-      bgYellowBright: [103, 49],
-      bgBlueBright: [104, 49],
-      bgMagentaBright: [105, 49],
-      bgCyanBright: [106, 49],
-      bgWhiteBright: [107, 49]
-    }
-  };
-  styles2.color.gray = styles2.color.blackBright;
-  styles2.bgColor.bgGray = styles2.bgColor.bgBlackBright;
-  styles2.color.grey = styles2.color.blackBright;
-  styles2.bgColor.bgGrey = styles2.bgColor.bgBlackBright;
-  for (const [groupName, group] of Object.entries(styles2)) {
+  for (const [groupName, group] of Object.entries(styles)) {
     for (const [styleName, style] of Object.entries(group)) {
-      styles2[styleName] = {
+      styles[styleName] = {
         open: `\x1B[${style[0]}m`,
         close: `\x1B[${style[1]}m`
       };
-      group[styleName] = styles2[styleName];
+      group[styleName] = styles[styleName];
       codes.set(style[0], style[1]);
     }
-    Object.defineProperty(styles2, groupName, {
+    Object.defineProperty(styles, groupName, {
       value: group,
       enumerable: false
     });
   }
-  Object.defineProperty(styles2, "codes", {
+  Object.defineProperty(styles, "codes", {
     value: codes,
     enumerable: false
   });
-  styles2.color.close = "\x1B[39m";
-  styles2.bgColor.close = "\x1B[49m";
-  styles2.color.ansi = wrapAnsi16();
-  styles2.color.ansi256 = wrapAnsi256();
-  styles2.color.ansi16m = wrapAnsi16m();
-  styles2.bgColor.ansi = wrapAnsi16(ANSI_BACKGROUND_OFFSET);
-  styles2.bgColor.ansi256 = wrapAnsi256(ANSI_BACKGROUND_OFFSET);
-  styles2.bgColor.ansi16m = wrapAnsi16m(ANSI_BACKGROUND_OFFSET);
-  Object.defineProperties(styles2, {
+  styles.color.close = "\x1B[39m";
+  styles.bgColor.close = "\x1B[49m";
+  styles.color.ansi = wrapAnsi16();
+  styles.color.ansi256 = wrapAnsi256();
+  styles.color.ansi16m = wrapAnsi16m();
+  styles.bgColor.ansi = wrapAnsi16(ANSI_BACKGROUND_OFFSET);
+  styles.bgColor.ansi256 = wrapAnsi256(ANSI_BACKGROUND_OFFSET);
+  styles.bgColor.ansi16m = wrapAnsi16m(ANSI_BACKGROUND_OFFSET);
+  Object.defineProperties(styles, {
     rgbToAnsi256: {
-      value: (red, green, blue) => {
+      value(red, green, blue) {
         if (red === green && green === blue) {
           if (red < 8) {
             return 16;
@@ -372,12 +390,12 @@ function assembleStyles() {
       enumerable: false
     },
     hexToRgb: {
-      value: (hex) => {
-        const matches = /(?<colorString>[a-f\d]{6}|[a-f\d]{3})/i.exec(hex.toString(16));
+      value(hex) {
+        const matches = /[a-f\d]{6}|[a-f\d]{3}/i.exec(hex.toString(16));
         if (!matches) {
           return [0, 0, 0];
         }
-        let { colorString } = matches.groups;
+        let [colorString] = matches;
         if (colorString.length === 3) {
           colorString = [...colorString].map((character) => character + character).join("");
         }
@@ -386,16 +404,17 @@ function assembleStyles() {
           integer >> 16 & 255,
           integer >> 8 & 255,
           integer & 255
+          /* eslint-enable no-bitwise */
         ];
       },
       enumerable: false
     },
     hexToAnsi256: {
-      value: (hex) => styles2.rgbToAnsi256(...styles2.hexToRgb(hex)),
+      value: (hex) => styles.rgbToAnsi256(...styles.hexToRgb(hex)),
       enumerable: false
     },
     ansi256ToAnsi: {
-      value: (code) => {
+      value(code) {
         if (code < 8) {
           return 30 + code;
         }
@@ -429,24 +448,24 @@ function assembleStyles() {
       enumerable: false
     },
     rgbToAnsi: {
-      value: (red, green, blue) => styles2.ansi256ToAnsi(styles2.rgbToAnsi256(red, green, blue)),
+      value: (red, green, blue) => styles.ansi256ToAnsi(styles.rgbToAnsi256(red, green, blue)),
       enumerable: false
     },
     hexToAnsi: {
-      value: (hex) => styles2.ansi256ToAnsi(styles2.hexToAnsi256(hex)),
+      value: (hex) => styles.ansi256ToAnsi(styles.hexToAnsi256(hex)),
       enumerable: false
     }
   });
-  return styles2;
+  return styles;
 }
 var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
-// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/vendor/supports-color/index.js
+// node_modules/.pnpm/chalk@5.2.0/node_modules/chalk/source/vendor/supports-color/index.js
 var import_node_process = __toESM(require("process"), 1);
 var import_node_os = __toESM(require("os"), 1);
 var import_node_tty = __toESM(require("tty"), 1);
-function hasFlag(flag, argv = import_node_process.default.argv) {
+function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : import_node_process.default.argv) {
   const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
   const position = argv.indexOf(prefix + flag);
   const terminatorPosition = argv.indexOf("--");
@@ -498,6 +517,9 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
       return 2;
     }
   }
+  if ("TF_BUILD" in env && "AGENT_NAME" in env) {
+    return 1;
+  }
   if (haveStream && !streamIsTTY && forceColor === void 0) {
     return 0;
   }
@@ -513,7 +535,10 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
     return 1;
   }
   if ("CI" in env) {
-    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE", "DRONE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+    if ("GITHUB_ACTIONS" in env) {
+      return 3;
+    }
+    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "BUILDKITE", "DRONE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
       return 1;
     }
     return min;
@@ -521,19 +546,21 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
   if ("TEAMCITY_VERSION" in env) {
     return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
   }
-  if ("TF_BUILD" in env && "AGENT_NAME" in env) {
-    return 1;
-  }
   if (env.COLORTERM === "truecolor") {
+    return 3;
+  }
+  if (env.TERM === "xterm-kitty") {
     return 3;
   }
   if ("TERM_PROGRAM" in env) {
     const version = Number.parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
     switch (env.TERM_PROGRAM) {
-      case "iTerm.app":
+      case "iTerm.app": {
         return version >= 3 ? 3 : 2;
-      case "Apple_Terminal":
+      }
+      case "Apple_Terminal": {
         return 2;
+      }
     }
   }
   if (/-256(color)?$/i.test(env.TERM)) {
@@ -560,7 +587,7 @@ var supportsColor = {
 };
 var supports_color_default = supportsColor;
 
-// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/utilities.js
+// node_modules/.pnpm/chalk@5.2.0/node_modules/chalk/source/utilities.js
 function stringReplaceAll(string, substring, replacer) {
   let index = string.indexOf(substring);
   if (index === -1) {
@@ -570,7 +597,7 @@ function stringReplaceAll(string, substring, replacer) {
   let endIndex = 0;
   let returnValue = "";
   do {
-    returnValue += string.substr(endIndex, index - endIndex) + substring + replacer;
+    returnValue += string.slice(endIndex, index) + substring + replacer;
     endIndex = index + substringLength;
     index = string.indexOf(substring, endIndex);
   } while (index !== -1);
@@ -582,7 +609,7 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
   let returnValue = "";
   do {
     const gotCR = string[index - 1] === "\r";
-    returnValue += string.substr(endIndex, (gotCR ? index - 1 : index) - endIndex) + prefix + (gotCR ? "\r\n" : "\n") + postfix;
+    returnValue += string.slice(endIndex, gotCR ? index - 1 : index) + prefix + (gotCR ? "\r\n" : "\n") + postfix;
     endIndex = index + 1;
     index = string.indexOf("\n", endIndex);
   } while (index !== -1);
@@ -590,7 +617,7 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
   return returnValue;
 }
 
-// node_modules/.pnpm/chalk@5.0.1/node_modules/chalk/source/index.js
+// node_modules/.pnpm/chalk@5.2.0/node_modules/chalk/source/index.js
 var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
 var GENERATOR = Symbol("GENERATOR");
 var STYLER = Symbol("STYLER");
@@ -601,7 +628,7 @@ var levelMapping = [
   "ansi256",
   "ansi16m"
 ];
-var styles = /* @__PURE__ */ Object.create(null);
+var styles2 = /* @__PURE__ */ Object.create(null);
 var applyOptions = (object, options2 = {}) => {
   if (options2.level && !(Number.isInteger(options2.level) && options2.level >= 0 && options2.level <= 3)) {
     throw new Error("The `level` option should be an integer from 0 to 3");
@@ -625,7 +652,7 @@ function createChalk(options2) {
 }
 Object.setPrototypeOf(createChalk.prototype, Function.prototype);
 for (const [styleName, style] of Object.entries(ansi_styles_default)) {
-  styles[styleName] = {
+  styles2[styleName] = {
     get() {
       const builder = createBuilder(this, createStyler(style.open, style.close, this[STYLER]), this[IS_EMPTY]);
       Object.defineProperty(this, styleName, { value: builder });
@@ -633,7 +660,7 @@ for (const [styleName, style] of Object.entries(ansi_styles_default)) {
     }
   };
 }
-styles.visible = {
+styles2.visible = {
   get() {
     const builder = createBuilder(this, this[STYLER], true);
     Object.defineProperty(this, "visible", { value: builder });
@@ -657,7 +684,7 @@ var getModelAnsi = (model, level, type, ...arguments_) => {
 };
 var usedModels = ["rgb", "hex", "ansi256"];
 for (const model of usedModels) {
-  styles[model] = {
+  styles2[model] = {
     get() {
       const { level } = this;
       return function(...arguments_) {
@@ -667,7 +694,7 @@ for (const model of usedModels) {
     }
   };
   const bgModel = "bg" + model[0].toUpperCase() + model.slice(1);
-  styles[bgModel] = {
+  styles2[bgModel] = {
     get() {
       const { level } = this;
       return function(...arguments_) {
@@ -679,7 +706,7 @@ for (const model of usedModels) {
 }
 var proto = Object.defineProperties(() => {
 }, {
-  ...styles,
+  ...styles2,
   level: {
     enumerable: true,
     get() {
@@ -737,7 +764,7 @@ var applyStyle = (self2, string) => {
   }
   return openAll + string + closeAll;
 };
-Object.defineProperties(createChalk.prototype, styles);
+Object.defineProperties(createChalk.prototype, styles2);
 var chalk = createChalk();
 var chalkStderr = createChalk({ level: stderrColor ? stderrColor.level : 0 });
 
@@ -775,6 +802,7 @@ var tags = {
   console: chalk2.gray("CONSOLE:")
 };
 var inspectOptions = {
+  // options passed to nodejs console constructor
   showHidden: false,
   depth: 5,
   colors: true,
