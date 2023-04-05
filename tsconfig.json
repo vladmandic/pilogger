@@ -19,7 +19,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "importsNotUsedAsValues": "error",
     "isolatedModules": false,
     "noEmitHelpers": true,
     "noEmitOnError": false,

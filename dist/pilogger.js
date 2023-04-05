@@ -94,9 +94,9 @@ var require_dayjs_min = __commonJS({
           this.$d = function(t3) {
             var e2 = t3.date, n2 = t3.utc;
             if (null === e2)
-              return new Date(NaN);
+              return /* @__PURE__ */ new Date(NaN);
             if (O.u(e2))
-              return new Date();
+              return /* @__PURE__ */ new Date();
             if (e2 instanceof Date)
               return new Date(e2);
             if ("string" == typeof e2 && !/Z$/i.test(e2)) {
@@ -401,6 +401,7 @@ function assembleStyles() {
         }
         const integer = Number.parseInt(colorString, 16);
         return [
+          /* eslint-disable no-bitwise */
           integer >> 16 & 255,
           integer >> 8 & 255,
           integer & 255
