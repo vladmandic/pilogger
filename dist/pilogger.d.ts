@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as fs from 'fs';
 export type Ring = {
     tag: string;

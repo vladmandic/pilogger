@@ -30,12 +30,12 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// node_modules/dayjs/dayjs.min.js
+// node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
-  "node_modules/dayjs/dayjs.min.js"(exports, module2) {
+  "node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/dayjs.min.js"(exports2, module2) {
     !function(t, e) {
-      "object" == typeof exports && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
-    }(exports, function() {
+      "object" == typeof exports2 && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
+    }(exports2, function() {
       "use strict";
       var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", c = "month", f = "quarter", h = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t2) {
         var e2 = ["th", "st", "nd", "rd"], n2 = t2 % 100;
@@ -47,8 +47,7 @@ var require_dayjs_min = __commonJS({
         var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r2 = Math.floor(n2 / 60), i2 = n2 % 60;
         return (e2 <= 0 ? "+" : "-") + m(r2, 2, "0") + ":" + m(i2, 2, "0");
       }, m: function t2(e2, n2) {
-        if (e2.date() < n2.date())
-          return -t2(n2, e2);
+        if (e2.date() < n2.date()) return -t2(n2, e2);
         var r2 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r2, c), s2 = n2 - i2 < 0, u2 = e2.clone().add(r2 + (s2 ? -1 : 1), c);
         return +(-(r2 + (n2 - i2) / (s2 ? i2 - u2 : u2 - i2)) || 0);
       }, a: function(t2) {
@@ -63,22 +62,19 @@ var require_dayjs_min = __commonJS({
         return t2 instanceof _ || !(!t2 || !t2[p]);
       }, w = function t2(e2, n2, r2) {
         var i2;
-        if (!e2)
-          return g;
+        if (!e2) return g;
         if ("string" == typeof e2) {
           var s2 = e2.toLowerCase();
           D[s2] && (i2 = s2), n2 && (D[s2] = n2, i2 = s2);
           var u2 = e2.split("-");
-          if (!i2 && u2.length > 1)
-            return t2(u2[0]);
+          if (!i2 && u2.length > 1) return t2(u2[0]);
         } else {
           var a2 = e2.name;
           D[a2] = e2, i2 = a2;
         }
         return !r2 && i2 && (g = i2), i2 || !r2 && g;
       }, O = function(t2, e2) {
-        if (S(t2))
-          return t2.clone();
+        if (S(t2)) return t2.clone();
         var n2 = "object" == typeof e2 ? e2 : {};
         return n2.date = t2, n2.args = arguments, new _(n2);
       }, b = v;
@@ -93,12 +89,9 @@ var require_dayjs_min = __commonJS({
         return m2.parse = function(t2) {
           this.$d = function(t3) {
             var e2 = t3.date, n2 = t3.utc;
-            if (null === e2)
-              return /* @__PURE__ */ new Date(NaN);
-            if (b.u(e2))
-              return /* @__PURE__ */ new Date();
-            if (e2 instanceof Date)
-              return new Date(e2);
+            if (null === e2) return /* @__PURE__ */ new Date(NaN);
+            if (b.u(e2)) return /* @__PURE__ */ new Date();
+            if (e2 instanceof Date) return new Date(e2);
             if ("string" == typeof e2 && !/Z$/i.test(e2)) {
               var r2 = e2.match($);
               if (r2) {
@@ -162,8 +155,7 @@ var require_dayjs_min = __commonJS({
           if (o2 === c || o2 === h) {
             var y2 = this.clone().set(d, 1);
             y2.$d[l2]($2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
-          } else
-            l2 && this.$d[l2]($2);
+          } else l2 && this.$d[l2]($2);
           return this.init(), this;
         }, m2.set = function(t2, e2) {
           return this.clone().$set(t2, e2);
@@ -176,22 +168,17 @@ var require_dayjs_min = __commonJS({
             var e2 = O(l2);
             return b.w(e2.date(e2.date() + Math.round(t2 * r2)), l2);
           };
-          if ($2 === c)
-            return this.set(c, this.$M + r2);
-          if ($2 === h)
-            return this.set(h, this.$y + r2);
-          if ($2 === a)
-            return y2(1);
-          if ($2 === o)
-            return y2(7);
+          if ($2 === c) return this.set(c, this.$M + r2);
+          if ($2 === h) return this.set(h, this.$y + r2);
+          if ($2 === a) return y2(1);
+          if ($2 === o) return y2(7);
           var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[$2] || 1, m3 = this.$d.getTime() + r2 * M3;
           return b.w(m3, this);
         }, m2.subtract = function(t2, e2) {
           return this.add(-1 * t2, e2);
         }, m2.format = function(t2) {
           var e2 = this, n2 = this.$locale();
-          if (!this.isValid())
-            return n2.invalidDate || l;
+          if (!this.isValid()) return n2.invalidDate || l;
           var r2 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = b.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, c2 = n2.months, f2 = n2.meridiem, h2 = function(t3, n3, i3, s3) {
             return t3 && (t3[n3] || t3(e2, r2)) || i3[n3].slice(0, s3);
           }, d2 = function(t3) {
@@ -295,8 +282,7 @@ var require_dayjs_min = __commonJS({
         }, m2.$locale = function() {
           return D[this.$L];
         }, m2.locale = function(t2, e2) {
-          if (!t2)
-            return this.$L;
+          if (!t2) return this.$L;
           var n2 = this.clone(), r2 = w(t2, e2, true);
           return r2 && (n2.$L = r2), n2;
         }, m2.clone = function() {
@@ -358,7 +344,7 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_dayjs = __toESM(require_dayjs_min());
 
-// node_modules/chalk/source/vendor/ansi-styles/index.js
+// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
 var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
 var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
@@ -544,10 +530,10 @@ function assembleStyles() {
 var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
-// node_modules/chalk/source/vendor/supports-color/index.js
-var import_node_process = __toESM(require("process"), 1);
-var import_node_os = __toESM(require("os"), 1);
-var import_node_tty = __toESM(require("tty"), 1);
+// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/vendor/supports-color/index.js
+var import_node_process = __toESM(require("node:process"), 1);
+var import_node_os = __toESM(require("node:os"), 1);
+var import_node_tty = __toESM(require("node:tty"), 1);
 function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : import_node_process.default.argv) {
   const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
   const position = argv.indexOf(prefix + flag);
@@ -670,7 +656,7 @@ var supportsColor = {
 };
 var supports_color_default = supportsColor;
 
-// node_modules/chalk/source/utilities.js
+// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/utilities.js
 function stringReplaceAll(string, substring, replacer) {
   let index = string.indexOf(substring);
   if (index === -1) {
@@ -700,7 +686,7 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
   return returnValue;
 }
 
-// node_modules/chalk/source/index.js
+// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/index.js
 var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
 var GENERATOR = Symbol("GENERATOR");
 var STYLER = Symbol("STYLER");
@@ -922,15 +908,12 @@ function combineMessages(...messages) {
 function print(...messages) {
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
   if (options.console) {
-    if (options.timeStamp)
-      logger.log(time, ...messages);
-    else
-      logger.log(...messages);
+    if (options.timeStamp) logger.log(time, ...messages);
+    else logger.log(...messages);
   }
 }
 function logFile(file) {
-  if (typeof file !== "string")
-    return;
+  if (typeof file !== "string") return;
   options.logFile = file;
   streams.logFile = true;
   streams.logStream = fs.createWriteStream(path.resolve(options.logFile || ""), { flags: "a" });
@@ -942,8 +925,7 @@ function logFile(file) {
   }
 }
 function accessFile(file) {
-  if (typeof file !== "string")
-    return;
+  if (typeof file !== "string") return;
   options.accessFile = file;
   streams.accessFile = true;
   streams.accessStream = fs.createWriteStream(path.resolve(options.accessFile), { flags: "a" });
@@ -955,8 +937,7 @@ function accessFile(file) {
   }
 }
 function clientFile(file) {
-  if (typeof file !== "string")
-    return;
+  if (typeof file !== "string") return;
   options.clientFile = file;
   streams.clientFile = true;
   streams.clientStream = fs.createWriteStream(path.resolve(options.clientFile), { flags: "a" });
@@ -980,56 +961,40 @@ async function timed(t0, ...messages) {
   }
   elapsed = Math.round(elapsed / 1e6);
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
-  if (options.console)
-    logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
-  if (streams.logFile && streams.logStream)
-    streams.logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}
+  if (options.console) logger.log(time, tags.timed, `${elapsed.toLocaleString()} ms`, ...messages);
+  if (streams.logFile && streams.logStream) streams.logStream.write(`${tags.timed} ${time} ${elapsed.toLocaleString()} ms ${combineMessages(...messages)}
 `);
 }
 async function log(tag, ...messages) {
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
-  if (tags[tag])
-    print(tags[tag], ...messages);
-  else
-    print(...messages);
-  if (streams.logFile && streams.logStream)
-    streams.logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}
+  if (tags[tag]) print(tags[tag], ...messages);
+  else print(...messages);
+  if (streams.logFile && streams.logStream) streams.logStream.write(`${time} ${tags[tag]} ${combineMessages(...messages)}
 `);
   ring.push({ tag, time, msg: combineMessages(...messages) });
-  if (ring.length > options.ringLength)
-    ring.shift();
+  if (ring.length > options.ringLength) ring.shift();
 }
 async function assert(res, exp, ...messages) {
-  if (res !== exp)
-    log("assert", ...messages, { res, exp });
+  if (res !== exp) log("assert", ...messages, { res, exp });
 }
 async function access(...messages) {
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
-  if (streams.accessFile && streams.accessStream)
-    streams.accessStream.write(`${time} ${combineMessages(...messages)}
+  if (streams.accessFile && streams.accessStream) streams.accessStream.write(`${time} ${combineMessages(...messages)}
 `);
 }
 async function client(...messages) {
   const time = (0, import_dayjs.default)(Date.now()).format(options.dateFormat);
-  if (streams.clientFile && streams.clientStream)
-    streams.clientStream.write(`${time} ${combineMessages(...messages)}
+  if (streams.clientFile && streams.clientStream) streams.clientStream.write(`${time} ${combineMessages(...messages)}
 `);
 }
 function configure(userOptions) {
-  if (!userOptions)
-    return;
-  if (userOptions.dateFormat)
-    options.dateFormat = userOptions.dateFormat;
-  if (userOptions.ringLength)
-    options.ringLength = userOptions.ringLength;
-  if (userOptions.logFile)
-    logFile(userOptions.logFile);
-  if (userOptions.accessFile)
-    accessFile(userOptions.accessFile);
-  if (userOptions.clientFile)
-    clientFile(userOptions.clientFile);
-  if (userOptions.inspect)
-    inspectOptions = { ...inspectOptions, ...userOptions.inspect };
+  if (!userOptions) return;
+  if (userOptions.dateFormat) options.dateFormat = userOptions.dateFormat;
+  if (userOptions.ringLength) options.ringLength = userOptions.ringLength;
+  if (userOptions.logFile) logFile(userOptions.logFile);
+  if (userOptions.accessFile) accessFile(userOptions.accessFile);
+  if (userOptions.clientFile) clientFile(userOptions.clientFile);
+  if (userOptions.inspect) inspectOptions = { ...inspectOptions, ...userOptions.inspect };
   logger = new import_console.Console({
     stdout: process.stdout,
     stderr: process.stderr,
@@ -1039,29 +1004,23 @@ function configure(userOptions) {
 }
 function header() {
   const f = "./package.json";
-  if (!fs.existsSync(f))
-    return;
+  if (!fs.existsSync(f)) return;
   const node = JSON.parse(fs.readFileSync(f).toString());
   process.title = node.name;
   log("info", node.name, "version", node.version);
   log("info", "User:", os2.userInfo().username, "Platform:", process.platform, "Arch:", process.arch, "Node:", process.version);
-  if (options.logFile && streams.logFile)
-    print(tags.state, "Application log:", path.resolve(options.logFile));
-  if (options.accessFile && streams.accessFile)
-    print(tags.state, "Access log:", path.resolve(options.accessFile));
-  if (options.clientFile && streams.clientFile)
-    print(tags.state, "Client log:", path.resolve(options.clientFile));
+  if (options.logFile && streams.logFile) print(tags.state, "Application log:", path.resolve(options.logFile));
+  if (options.accessFile && streams.accessFile) print(tags.state, "Access log:", path.resolve(options.accessFile));
+  if (options.clientFile && streams.clientFile) print(tags.state, "Client log:", path.resolve(options.clientFile));
 }
 function headerJson() {
   const f = "./package.json";
-  if (!fs.existsSync(f))
-    return;
+  if (!fs.existsSync(f)) return;
   const node = JSON.parse(fs.readFileSync(f).toString());
   process.title = node.name;
   log("info", { application: node.name, version: node.version });
   log("info", { user: os2.userInfo().username, platform: process.platform, arch: process.arch, node: process.version });
-  if (options.logFile || options.accessFile || options.clientFile)
-    print(tags.state, { log: path.resolve(options.logFile || ""), access: path.resolve(options.accessFile || ""), client: path.resolve(options.clientFile || "") });
+  if (options.logFile || options.accessFile || options.clientFile) print(tags.state, { log: path.resolve(options.logFile || ""), access: path.resolve(options.accessFile || ""), client: path.resolve(options.clientFile || "") });
 }
 var blank = (...message) => log("blank", ...message);
 var info = (...message) => log("info", ...message);
