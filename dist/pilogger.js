@@ -33,9 +33,9 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/dayjs.min.js
 var require_dayjs_min = __commonJS({
   "node_modules/.pnpm/dayjs@1.11.13/node_modules/dayjs/dayjs.min.js"(exports2, module2) {
-    !function(t, e) {
+    !(function(t, e) {
       "object" == typeof exports2 && "undefined" != typeof module2 ? module2.exports = e() : "function" == typeof define && define.amd ? define(e) : (t = "undefined" != typeof globalThis ? globalThis : t || self).dayjs = e();
-    }(exports2, function() {
+    })(exports2, (function() {
       "use strict";
       var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", c = "month", f = "quarter", h = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t2) {
         var e2 = ["th", "st", "nd", "rd"], n2 = t2 % 100;
@@ -81,13 +81,13 @@ var require_dayjs_min = __commonJS({
       b.l = w, b.i = S, b.w = function(t2, e2) {
         return O(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
       };
-      var _ = function() {
+      var _ = (function() {
         function M2(t2) {
           this.$L = w(t2.locale, null, true), this.parse(t2), this.$x = this.$x || t2.x || {}, this[p] = true;
         }
         var m2 = M2.prototype;
         return m2.parse = function(t2) {
-          this.$d = function(t3) {
+          this.$d = (function(t3) {
             var e2 = t3.date, n2 = t3.utc;
             if (null === e2) return /* @__PURE__ */ new Date(NaN);
             if (b.u(e2)) return /* @__PURE__ */ new Date();
@@ -100,7 +100,7 @@ var require_dayjs_min = __commonJS({
               }
             }
             return new Date(e2);
-          }(t2), this.init();
+          })(t2), this.init();
         }, m2.init = function() {
           var t2 = this.$d;
           this.$y = t2.getFullYear(), this.$M = t2.getMonth(), this.$D = t2.getDate(), this.$W = t2.getDay(), this.$H = t2.getHours(), this.$m = t2.getMinutes(), this.$s = t2.getSeconds(), this.$ms = t2.getMilliseconds();
@@ -187,8 +187,8 @@ var require_dayjs_min = __commonJS({
             var r3 = t3 < 12 ? "AM" : "PM";
             return n3 ? r3.toLowerCase() : r3;
           };
-          return r2.replace(y, function(t3, r3) {
-            return r3 || function(t4) {
+          return r2.replace(y, (function(t3, r3) {
+            return r3 || (function(t4) {
               switch (t4) {
                 case "YY":
                   return String(e2.$y).slice(-2);
@@ -240,8 +240,8 @@ var require_dayjs_min = __commonJS({
                   return i2;
               }
               return null;
-            }(t3) || i2.replace(":", "");
-          });
+            })(t3) || i2.replace(":", "");
+          }));
         }, m2.utcOffset = function() {
           return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
         }, m2.diff = function(r2, d2, l2) {
@@ -296,17 +296,17 @@ var require_dayjs_min = __commonJS({
         }, m2.toString = function() {
           return this.$d.toUTCString();
         }, M2;
-      }(), k = _.prototype;
-      return O.prototype = k, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", c], ["$y", h], ["$D", d]].forEach(function(t2) {
+      })(), k = _.prototype;
+      return O.prototype = k, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", c], ["$y", h], ["$D", d]].forEach((function(t2) {
         k[t2[1]] = function(e2) {
           return this.$g(e2, t2[0], t2[1]);
         };
-      }), O.extend = function(t2, e2) {
+      })), O.extend = function(t2, e2) {
         return t2.$i || (t2(e2, _, O), t2.$i = true), O;
       }, O.locale = w, O.isDayjs = S, O.unix = function(t2) {
         return O(1e3 * t2);
       }, O.en = D[g], O.Ls = D, O.p = {}, O;
-    });
+    }));
   }
 });
 
@@ -344,7 +344,7 @@ var fs = __toESM(require("fs"));
 var path = __toESM(require("path"));
 var import_dayjs = __toESM(require_dayjs_min());
 
-// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/vendor/ansi-styles/index.js
+// node_modules/.pnpm/chalk@5.6.0/node_modules/chalk/source/vendor/ansi-styles/index.js
 var ANSI_BACKGROUND_OFFSET = 10;
 var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
 var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
@@ -530,7 +530,7 @@ function assembleStyles() {
 var ansiStyles = assembleStyles();
 var ansi_styles_default = ansiStyles;
 
-// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/vendor/supports-color/index.js
+// node_modules/.pnpm/chalk@5.6.0/node_modules/chalk/source/vendor/supports-color/index.js
 var import_node_process = __toESM(require("node:process"), 1);
 var import_node_os = __toESM(require("node:os"), 1);
 var import_node_tty = __toESM(require("node:tty"), 1);
@@ -604,10 +604,10 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
     return 1;
   }
   if ("CI" in env) {
-    if ("GITHUB_ACTIONS" in env || "GITEA_ACTIONS" in env) {
+    if (["GITHUB_ACTIONS", "GITEA_ACTIONS", "CIRCLECI"].some((key) => key in env)) {
       return 3;
     }
-    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "BUILDKITE", "DRONE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+    if (["TRAVIS", "APPVEYOR", "GITLAB_CI", "BUILDKITE", "DRONE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
       return 1;
     }
     return min;
@@ -619,6 +619,12 @@ function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
     return 3;
   }
   if (env.TERM === "xterm-kitty") {
+    return 3;
+  }
+  if (env.TERM === "xterm-ghostty") {
+    return 3;
+  }
+  if (env.TERM === "wezterm") {
     return 3;
   }
   if ("TERM_PROGRAM" in env) {
@@ -656,7 +662,7 @@ var supportsColor = {
 };
 var supports_color_default = supportsColor;
 
-// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/utilities.js
+// node_modules/.pnpm/chalk@5.6.0/node_modules/chalk/source/utilities.js
 function stringReplaceAll(string, substring, replacer) {
   let index = string.indexOf(substring);
   if (index === -1) {
@@ -686,7 +692,7 @@ function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
   return returnValue;
 }
 
-// node_modules/.pnpm/chalk@5.3.0/node_modules/chalk/source/index.js
+// node_modules/.pnpm/chalk@5.6.0/node_modules/chalk/source/index.js
 var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
 var GENERATOR = Symbol("GENERATOR");
 var STYLER = Symbol("STYLER");
